@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Menu & Pricing | Sabrina's Sweet Studio – Custom Cakes & Treats</title>
+  <!-- Tailwind CSS + Google Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#e07a5f',      // warm coral/terra cotta
+            secondary: '#fdf3e7',    // soft cream background
+            background: '#fffaf5',
+            foreground: '#2c2b28',
+            muted: {
+              foreground: '#6b6a66',
+              DEFAULT: '#f8f4ef',
+            },
+            border: '#e9e2d8',
+            card: '#ffffff',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'sans-serif'],
+          },
+          borderRadius: {
+            'xl': '1rem',
+            '2xl': '1.5rem',
+          },
+          animation: {
+            'fade-up': 'fadeUp 0.6s ease-out',
+            'scale-subtle': 'scaleSubtle 0.4s ease',
+          },
+          keyframes: {
+            fadeUp: { '0%': { opacity: '0', transform: 'translateY(12px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+            scaleSubtle: { '0%': { transform: 'scale(0.98)' }, '100%': { transform: 'scale(1)' } }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <style>
+    body { background: #fffaf5; }
+    .menu-card-transition {
+      transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+    }
+    .menu-card-transition:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.08);
+    }
+    .flavor-chip {
+      transition: all 0.2s;
+    }
+    .flavor-chip:hover {
+      background-color: #e07a5f;
+      color: white;
+      transform: scale(1.02);
+    }
+    .section-fade {
+      animation: fadeUp 0.55s ease forwards;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .img-hover-zoom {
+      overflow: hidden;
+    }
+    .img-hover-zoom img {
+      transition: transform 0.5s ease;
+    }
+    .img-hover-zoom:hover img {
+      transform: scale(1.04);
+    }
+  </style>
+</head>
+<body class="font-sans text-foreground antialiased">
+
+  <div class="min-h-screen flex flex-col">
+    <!-- Header / Hero Section -->
+    <section class="py-16 px-4 text-center bg-secondary border-b border-border/40">
+      <div class="container mx-auto max-w-3xl">
+        <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Menu & Pricing</h1>
+        <p class="text-muted-foreground text-lg max-w-2xl mx-auto">
+          All items are made fresh to order. Prices may vary based on customization and complexity.
+        </p>
+      </div>
+    </section>
+
+    <!-- Menu Items Section (alternating image + details) -->
+    <section class="py-16 px-4">
+      <div class="container mx-auto max-w-6xl">
+        <div class="space-y-20 md:space-y-24">
+          <!-- category 1: Custom Cakes -->
+          <div class="grid md:grid-cols-2 gap-10 items-start">
+            <div class="img-hover-zoom rounded-xl shadow-md">
+              <div class="aspect-[4/3] rounded-xl overflow-hidden bg-secondary">
+                <img src="https://images.unsplash.com/photo-1737700088028-fae0666feb83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbGVnYW50JTIwY2FrZSUyMGRlc3NlcnQlMjBkaXNwbGF5fGVufDF8fHx8MTc3NDUzMzI1OHww&ixlib=rb-4.1.0&q=80&w=1080" 
+                     alt="Custom celebration cake" class="w-full h-full object-cover">
+              </div>
+            </div>
+            <div>
+              <h2 class="text-3xl md:text-4xl font-bold mb-3">Custom Cakes</h2>
+              <p class="text-muted-foreground mb-6 text-base leading-relaxed">Perfect for birthdays, celebrations, and special occasions</p>
+              <div class="space-y-4">
+                <div class="bg-secondary/40 p-4 rounded-xl border border-border/40 transition-shadow hover:shadow-sm">
+                  <div class="flex flex-wrap justify-between items-start gap-2 mb-1">
+                    <h3 class="font-semibold text-foreground">6 inch (serves 8-10)</h3>
+                    <span class="text-primary font-medium">Starting at $45</span>
+                  </div>
+                  <p class="text-sm text-muted-foreground">Simple design</p>
+                </div>
+                <div class="bg-secondary/40 p-4 rounded-xl border border-border/40">
+                  <div class="flex flex-wrap justify-between items-start gap-2 mb-1">
+                    <h3 class="font-semibold">8 inch (serves 12-15)</h3>
+                    <span class="text-primary font-medium">Starting at $65</span>
+                  </div>
+                  <p class="text-sm text-muted-foreground">Simple design</p>
+                </div>
+                <div class="bg-secondary/40 p-4 rounded-xl border border-border/40">
+                  <div class="flex flex-wrap justify-between items-start gap-2 mb-1">
+                    <h3 class="font-semibold">10 inch (serves 20-25)</h3>
+                    <span class="text-primary font-medium">Starting at $85</span>
+                  </div>
+                  <p class="text-sm text-muted-foreground">Simple design</p>
+                </div>
+                <div class="bg-secondary/40 p-4 rounded-xl border border-border/40">
+                  <div class="flex flex-wrap justify-between items-start gap-2 mb-1">
+                    <h3 class="font-semibold">Custom designs</h3>
+                    <span class="text-primary font-medium">Price varies</span>
+                  </div>
+                  <p class="text-sm text-muted-foreground">Contact for quote</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- category 2: Cupcakes (image right, content left) -->
+          <div class="grid md:grid-cols-2 gap-10 items-start">
+            <div class="md:order-2 img-hover-zoom rounded-xl shadow-md">
+              <div class="aspect-[4/3] rounded-xl overflow-hidden bg-secondary">
+                <img src="https://images.unsplash.com/photo-1702745572953-9b9181b640d1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmcmVuY2glMjBtYWNhcm9uJTIwcGFzdGVsJTIwY29sb3JzfGVufDF8fHx8MTc3NDUzMzI1OXww&ixlib=rb-4.1.0&q=80&w=1080"
+                     alt="Beautiful cupcakes assortment" class="w-full h-full object-cover">
+              </div>
+            </div>
+            <div class="md:order-1">
+              <h2 class="text-3xl md:text-4xl font-bold mb-3">Cupcakes</h2>
+              <p class="text-muted-foreground mb-6 text-base">Freshly baked and beautifully decorated</p>
+              <div class="space-y-4">
+                <div class="bg-secondary/40 p-4 rounded-xl border border-border/40">
+                  <div class="flex flex-wrap justify-between gap-2 mb-1"><span class="font-semibold">Regular cupcakes</span><span class="text-primary font-medium">$3.00 each</span></div>
+                  <p class="text-sm text-muted-foreground">Minimum 6</p>
+                </div>
+                <div class="bg-secondary/40 p-4 rounded-xl border border-border/40">
+                  <div class="flex flex-wrap justify-between gap-2 mb-1"><span class="font-semibold">Custom decorated</span><span class="text-primary font-medium">$4.50 each</span></div>
+                  <p class="text-sm text-muted-foreground">Minimum 6</p>
+                </div>
+                <div class="bg-secondary/40 p-4 rounded-xl border border-border/40">
+                  <div class="flex flex-wrap justify-between gap-2 mb-1"><span class="font-semibold">Dozen (12)</span><span class="text-primary font-medium">$35</span></div>
+                  <p class="text-sm text-muted-foreground">Regular frosting</p>
+                </div>
+                <div class="bg-secondary/40 p-4 rounded-xl border border-border/40">
+                  <div class="flex flex-wrap justify-between gap-2 mb-1"><span class="font-semibold">Custom theme set</span><span class="text-primary font-medium">From $50</span></div>
+                  <p class="text-sm text-muted-foreground">Minimum 12</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- category 3: Cookies & Brownies -->
+          <div class="grid md:grid-cols-2 gap-10 items-start">
+            <div class="img-hover-zoom rounded-xl shadow-md">
+              <div class="aspect-[4/3] rounded-xl overflow-hidden bg-secondary">
+                <img src="https://images.unsplash.com/photo-1700448293876-07dca826c161?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaG9jb2xhdGUlMjBjYWtlJTIwc2xpY2V8ZW58MXx8fHwxNzc0NTA0NjY0fDA&ixlib=rb-4.1.0&q=80&w=1080" 
+                     alt="Cookies & Brownies tray" class="w-full h-full object-cover">
+              </div>
+            </div>
+            <div>
+              <h2 class="text-3xl md:text-4xl font-bold mb-3">Cookies & Brownies</h2>
+              <p class="text-muted-foreground mb-6">Soft, chewy, and delicious</p>
+              <div class="space-y-4">
+                <div class="bg-secondary/40 p-4 rounded-xl border border-border/40"><div class="flex flex-wrap justify-between gap-2 mb-1"><span class="font-semibold">Chocolate chip cookies</span><span class="text-primary font-medium">$2.50 each</span></div><p class="text-sm text-muted-foreground">Minimum 6</p></div>
+                <div class="bg-secondary/40 p-4 rounded-xl border border-border/40"><div class="flex flex-wrap justify-between gap-2 mb-1"><span class="font-semibold">Sugar cookies (plain)</span><span class="text-primary font-medium">$2.50 each</span></div><p class="text-sm text-muted-foreground">Minimum 6</p></div>
+                <div class="bg-secondary/40 p-4 rounded-xl border border-border/40"><div class="flex flex-wrap justify-between gap-2 mb-1"><span class="font-semibold">Custom decorated cookies</span><span class="text-primary font-medium">$4.00 each</span></div><p class="text-sm text-muted-foreground">Minimum 12</p></div>
+                <div class="bg-secondary/40 p-4 rounded-xl border border-border/40"><div class="flex flex-wrap justify-between gap-2 mb-1"><span class="font-semibold">Brownies</span><span class="text-primary font-medium">$3.00 each</span></div><p class="text-sm text-muted-foreground">Fudgy or cakey</p></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- category 4: Other Treats (image right) - USING EXACT ORIGINAL UNSPLASH IMAGE -->
+          <div class="grid md:grid-cols-2 gap-10 items-start">
+            <div class="md:order-2 img-hover-zoom rounded-xl shadow-md">
+              <div class="aspect-[4/3] rounded-xl overflow-hidden bg-secondary">
+                <img src="https://images.unsplash.com/photo-1751151856149-5ebf1d21586a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnRpc2FuJTIwcGFzdHJpZXMlMjBjcm9pc1NhbnQlMjBiYWtlcnl8ZW58MXx8fHwxNzc0NTMzMjU4fDA&ixlib=rb-4.1.0&q=80&w=1080"
+                     alt="Assorted sweet treats, artisan pastries and dessert selection" class="w-full h-full object-cover">
+              </div>
+            </div>
+            <div class="md:order-1">
+              <h2 class="text-3xl md:text-4xl font-bold mb-3">Other Treats</h2>
+              <p class="text-muted-foreground mb-6">More sweet options to satisfy your cravings</p>
+              <div class="space-y-4">
+                <div class="bg-secondary/40 p-4 rounded-xl border border-border/40"><div class="flex flex-wrap justify-between gap-2 mb-1"><span class="font-semibold">Cake pops</span><span class="text-primary font-medium">$3.50 each</span></div><p class="text-sm text-muted-foreground">Minimum 12</p></div>
+                <div class="bg-secondary/40 p-4 rounded-xl border border-border/40"><div class="flex flex-wrap justify-between gap-2 mb-1"><span class="font-semibold">Mini cheesecakes</span><span class="text-primary font-medium">$4.00 each</span></div><p class="text-sm text-muted-foreground">Various flavors</p></div>
+                <div class="bg-secondary/40 p-4 rounded-xl border border-border/40"><div class="flex flex-wrap justify-between gap-2 mb-1"><span class="font-semibold">Rice crispy treats</span><span class="text-primary font-medium">$2.50 each</span></div><p class="text-sm text-muted-foreground">Can be themed</p></div>
+                <div class="bg-secondary/40 p-4 rounded-xl border border-border/40"><div class="flex flex-wrap justify-between gap-2 mb-1"><span class="font-semibold">Cookie dough bites</span><span class="text-primary font-medium">$8.00 per box</span></div><p class="text-sm text-muted-foreground">6 pieces per box</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Flavors Section (chip list) -->
+    <section class="py-16 px-4 bg-secondary">
+      <div class="container mx-auto max-w-5xl">
+        <div class="text-center mb-10">
+          <h2 class="text-3xl md:text-4xl font-bold mb-3">Popular Flavors</h2>
+          <p class="text-muted-foreground text-lg">Choose from these flavors or suggest your own!</p>
+        </div>
+        <div class="flex flex-wrap gap-3 justify-center">
+          <span class="bg-white border border-border px-5 py-2.5 rounded-full text-sm font-medium shadow-sm transition-all flavor-chip cursor-default">Vanilla</span>
+          <span class="bg-white border border-border px-5 py-2.5 rounded-full text-sm font-medium shadow-sm flavor-chip cursor-default">Chocolate</span>
+          <span class="bg-white border border-border px-5 py-2.5 rounded-full text-sm font-medium shadow-sm flavor-chip cursor-default">Red Velvet</span>
+          <span class="bg-white border border-border px-5 py-2.5 rounded-full text-sm font-medium shadow-sm flavor-chip cursor-default">Lemon</span>
+          <span class="bg-white border border-border px-5 py-2.5 rounded-full text-sm font-medium shadow-sm flavor-chip cursor-default">Strawberry</span>
+          <span class="bg-white border border-border px-5 py-2.5 rounded-full text-sm font-medium shadow-sm flavor-chip cursor-default">Carrot Cake</span>
+          <span class="bg-white border border-border px-5 py-2.5 rounded-full text-sm font-medium shadow-sm flavor-chip cursor-default">Cookies & Cream</span>
+          <span class="bg-white border border-border px-5 py-2.5 rounded-full text-sm font-medium shadow-sm flavor-chip cursor-default">Funfetti</span>
+          <span class="bg-white border border-border px-5 py-2.5 rounded-full text-sm font-medium shadow-sm flavor-chip cursor-default">Salted Caramel</span>
+          <span class="bg-white border border-border px-5 py-2.5 rounded-full text-sm font-medium shadow-sm flavor-chip cursor-default">Mocha</span>
+        </div>
+        <p class="text-center text-xs text-muted-foreground mt-6">* Additional flavors available upon request (matcha, lavender, peanut butter, etc.)</p>
+      </div>
+    </section>
+
+    <!-- Additional Info Grid: Customization Options + Important Notes -->
+    <section class="py-16 px-4">
+      <div class="container mx-auto max-w-5xl">
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="bg-white border border-border rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+            <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-primary text-2xl">✓</span> Customization Options</h3>
+            <ul class="text-sm text-muted-foreground space-y-2.5">
+              <li>✓ Custom colors and themes</li>
+              <li>✓ Personalized messages</li>
+              <li>✓ Special dietary requests (gluten-free, vegan, etc.)</li>
+              <li>✓ Character or themed designs</li>
+              <li>✓ Fondant or buttercream finishes</li>
+              <li>✓ Edible images and decorations</li>
+            </ul>
+          </div>
+          <div class="bg-white border border-border rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+            <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><span class="text-primary text-2xl">📝</span> Important Notes</h3>
+            <ul class="text-sm text-muted-foreground space-y-2.5">
+              <li>• Minimum 48 hours notice required</li>
+              <li>• Custom designs need more lead time</li>
+              <li>• 50% deposit required to confirm order</li>
+              <li>• Prices vary based on complexity</li>
+              <li>• Contact me for special dietary options</li>
+              <li>• Pickup arrangements discussed after order</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section: Ready to Place Order? -->
+    <section class="py-20 px-4 bg-primary/5 border-t border-primary/10">
+      <div class="container mx-auto max-w-3xl text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to Place Your Order?</h2>
+        <p class="text-muted-foreground mb-8 text-lg">
+          Fill out the order form with your details and I'll send you a quote within 24 hours!
+        </p>
+        <a href="#" class="inline-flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-full hover:bg-primary/90 transition-all shadow-md text-lg font-medium">
+          Place an Order
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+        <p class="text-xs text-muted-foreground mt-5">Have questions? DM on Instagram @sagesucre or email hello@sagesucre.com</p>
+      </div>
+    </section>
+
+    <!-- Simple Footer -->
+    <footer class="bg-white border-t border-border py-8 text-center text-sm text-muted-foreground">
+      <div class="container mx-auto px-4">
+        <p>🍰 Sabrina's Sweet Studio — handmade with love. All prices in USD.</p>
+        <div class="mt-2 flex justify-center gap-5">
+          <a href="#" class="hover:text-primary transition">Home</a>
+          <a href="#" class="hover:text-primary transition">Order info</a>
+          <a href="https://instagram.com/sagesucre" target="_blank" class="hover:text-primary transition">Instagram</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <script>
+    // Simple smooth scroll for any internal hash (keeping behavior like React router placeholders)
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href === "#" || href === "#/") return;
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
