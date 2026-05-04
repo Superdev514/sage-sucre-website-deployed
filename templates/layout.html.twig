@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#e07a5f',
+            secondary: '#fdf3e7',
+            background: '#fffaf5',
+            foreground: '#2c2b28',
+            muted: {
+              foreground: '#6b6a66',
+              DEFAULT: '#f8f4ef',
+            },
+            border: '#e9e2d8',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background: #fffaf5; }
+    .card-hover { transition: all 0.25s ease; }
+    .card-hover:hover { transform: translateY(-6px); box-shadow: 0 20px 25px -12px rgba(0,0,0,0.08); }
+  </style>
+</head>
+<body class="font-sans text-foreground antialiased">
+
+  <!-- Navbar -->
+  <nav class="bg-white border-b border-border sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="/Sage-Sucre-Website/" class="flex items-center gap-2">
+        <span class="text-2xl">🌸</span>
+        <span class="font-bold text-xl text-foreground">Sage Sucre</span>
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="/Sage-Sucre-Website/" class="text-sm font-medium hover:text-primary transition">Home</a>
+        <a href="/Sage-Sucre-Website/menu" class="text-sm font-medium hover:text-primary transition">Menu</a>
+        <a href="/Sage-Sucre-Website/about" class="text-sm font-medium hover:text-primary transition">About</a>
+        <a href="/Sage-Sucre-Website/contact" class="text-sm font-medium hover:text-primary transition">Contact</a>
+      </div>
+      <a href="/Sage-Sucre-Website/order" class="bg-primary text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-primary/90 transition shadow-sm">
+        Order Now
+      </a>
+    </div>
+  </nav>
+
+  <!-- Flash messages -->
+  {% if flash is defined and flash %}
+    <div class="container mx-auto px-4 pt-4">
+      <div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg text-sm">
+        {{ flash }}
+      </div>
+    </div>
+  {% endif %}
+
+  <!-- Page content -->
+  {% block content %}{% endblock %}
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-border py-8 text-center text-sm text-muted-foreground">
+    <div class="container mx-auto px-4">
+      <p>🌸 Sage Sucre — handmade with love. All rights reserved.</p>
+      <p class="mt-1">📍 Pickup: Plateau (Montreal) & Boisbriand</p>
+      <div class="mt-3 flex justify-center gap-6">
+        <a href="/Sage-Sucre-Website/menu" class="hover:text-primary transition">Menu</a>
+        <a href="/Sage-Sucre-Website/order" class="hover:text-primary transition">Order</a>
+        <a href="/Sage-Sucre-Website/contact" class="hover:text-primary transition">Contact</a>
+        <a href="https://instagram.com/sagesucre" target="_blank" class="hover:text-primary transition">Instagram</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

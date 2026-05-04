@@ -1,0 +1,66 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+
+<section class="py-16 px-4 bg-secondary">
+  <div class="container mx-auto max-w-6xl">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">Our Menu</h1>
+      <p class="text-muted-foreground text-lg max-w-2xl mx-auto">
+        Everything is made fresh to order with quality ingredients
+      </p>
+    </div>
+
+    {% if products is empty %}
+      <div class="text-center py-16">
+        <p class="text-muted-foreground text-lg">No products available yet. Check back soon!</p>
+      </div>
+    {% else %}
+      <div class="grid md:grid-cols-3 gap-6">
+        {% for product in products %}
+          <div class="bg-white rounded-xl overflow-hidden card-hover shadow-sm">
+            <div class="aspect-square bg-secondary flex items-center justify-center">
+              <span class="text-6xl">🍰</span>
+            </div>
+
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">{{ product.name }}</h3>
+
+              <p class="text-muted-foreground text-sm mb-4">
+                {{ product.description }}
+              </p>
+
+              <div class="flex items-center justify-between">
+                <p class="text-primary font-semibold">
+                  {% if product.price > 0 %}
+                    ${{ product.price|number_format(2) }}
+                  {% else %}
+                    Price on request
+                  {% endif %}
+                </p>
+
+                <a href="/Sage-Sucre-Website/order"
+                   class="bg-primary text-white px-4 py-2 rounded-full text-sm hover:bg-primary/90 transition">
+                  Order
+                </a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="text-center mt-16">
+      <p class="text-muted-foreground mb-4">
+        Don't see what you're looking for? I do fully custom orders!
+      </p>
+
+      <a href="/Sage-Sucre-Website/order"
+         class="inline-flex items-center gap-2 bg-primary text-white px-8 py-3 rounded-full hover:bg-primary/90 transition shadow-md">
+        Place a Custom Order →
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

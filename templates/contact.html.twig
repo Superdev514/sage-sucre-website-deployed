@@ -1,0 +1,29 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}Contact - Sage Sucre{% endblock %}
+
+{% block content %}
+<section class="max-w-4xl mx-auto px-6 py-16">
+    <h1 class="text-4xl font-bold mb-6 text-[#2c2b28]">Contact Us</h1>
+
+    <div class="bg-[#fffaf5] border border-[#e9e2d8] rounded-2xl p-8 shadow-sm">
+        <p class="text-lg text-[#6b6a66] mb-6">
+            Have a question about an order, pickup location, or custom dessert?
+            Contact Sage Sucre using the information below.
+        </p>
+
+        <div class="space-y-4 text-[#2c2b28]">
+            <p><strong>Email:</strong> sagesucre@example.com</p>
+            <p><strong>Instagram:</strong> @sagesucre</p>
+            <p><strong>Pickup Locations:</strong> Plateau, Montreal and Boisbriand</p>
+        </div>
+
+        <div class="mt-8">
+            <a href="/Sage-Sucre-Website/order"
+               class="inline-block bg-[#e07a5f] text-white px-6 py-3 rounded-xl font-semibold hover:opacity-90">
+                Start an Order
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

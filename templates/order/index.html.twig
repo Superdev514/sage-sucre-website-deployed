@@ -1,0 +1,76 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+
+<section class="py-16 px-4">
+  <div class="max-w-3xl mx-auto">
+    <h1 class="text-4xl font-bold mb-8 text-center">Place an Order</h1>
+
+    <form method="POST" action="/Sage-Sucre-Website/order/submit"
+      class="bg-white p-8 rounded-xl shadow space-y-6">
+
+      <!-- First Name -->
+      <div>
+        <label class="block font-semibold mb-2">First Name</label>
+        <input type="text" name="first_name" required class="w-full border p-3 rounded-lg">
+      </div>
+
+      <!-- Last Name -->
+      <div>
+        <label class="block font-semibold mb-2">Last Name</label>
+        <input type="text" name="last_name" required class="w-full border p-3 rounded-lg">
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label class="block font-semibold mb-2">Email</label>
+        <input type="email" name="email" required class="w-full border p-3 rounded-lg">
+      </div>
+
+      <!-- Phone -->
+      <div>
+        <label class="block font-semibold mb-2">Phone</label>
+        <input type="text" name="phone" class="w-full border p-3 rounded-lg">
+      </div>
+
+      <!-- Product -->
+      <div>
+        <label class="block font-semibold mb-2">Product</label>
+        <select name="product_type" class="w-full border p-3 rounded-lg">
+          <option value="Custom Cake">Custom Cake</option>
+          <option value="Cupcakes">Cupcakes</option>
+          <option value="Cookies">Cookies</option>
+        </select>
+      </div>
+
+      <!-- Pickup Location -->
+      <div>
+        <label class="block font-semibold mb-2">Pickup Location</label>
+        <select name="pickup_location" class="w-full border p-3 rounded-lg">
+          <option value="Plateau (Montreal)">Plateau (Montreal)</option>
+          <option value="Boisbriand">Boisbriand</option>
+        </select>
+      </div>
+
+      <!-- Date -->
+      <div>
+        <label class="block font-semibold mb-2">Pickup Date</label>
+        <input type="date" name="pickup_date" required class="w-full border p-3 rounded-lg">
+      </div>
+
+      <!-- Customizations -->
+      <div>
+        <label class="block font-semibold mb-2">Order Details</label>
+        <textarea name="customizations" rows="5" class="w-full border p-3 rounded-lg"></textarea>
+      </div>
+
+      <button type="submit"
+              class="w-full bg-primary text-white py-3 rounded-lg font-semibold">
+        Submit Order
+      </button>
+
+    </form>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+
+<section class="py-16 px-4 bg-secondary min-h-screen">
+  <div class="container mx-auto max-w-6xl">
+
+    <h1 class="text-4xl font-bold mb-8">Admin Dashboard</h1>
+
+    <div class="grid md:grid-cols-3 gap-6 mb-10">
+      <div class="bg-white p-6 rounded-xl shadow">
+        <p class="text-muted-foreground">Total Orders</p>
+        <h2 class="text-3xl font-bold">{{ totalOrders }}</h2>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl shadow">
+        <p class="text-muted-foreground">Pending Orders</p>
+        <h2 class="text-3xl font-bold">{{ pendingOrders }}</h2>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl shadow">
+        <p class="text-muted-foreground">Completed Orders</p>
+        <h2 class="text-3xl font-bold">{{ completedOrders }}</h2>
+      </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow">
+      <h2 class="text-2xl font-bold mb-4">Admin Links</h2>
+
+      <div class="flex flex-wrap gap-4">
+        <a href="/Sage-Sucre-Website/admin/orders" class="bg-primary text-white px-5 py-3 rounded-lg">
+          View Orders
+        </a>
+
+        <a href="/Sage-Sucre-Website/admin/products" class="bg-primary text-white px-5 py-3 rounded-lg">
+          Manage Products
+        </a>
+
+        <a href="/Sage-Sucre-Website/admin/logout" class="bg-gray-700 text-white px-5 py-3 rounded-lg">
+          Logout
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}

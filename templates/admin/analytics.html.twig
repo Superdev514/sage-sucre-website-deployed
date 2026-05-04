@@ -1,0 +1,57 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+
+<section class="py-16 px-4 bg-secondary min-h-screen">
+  <div class="container mx-auto max-w-6xl">
+
+    <h1 class="text-4xl font-bold mb-8">Analytics</h1>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-10">
+      <div class="bg-white p-6 rounded-xl shadow">
+        <p class="text-muted-foreground">Total Orders</p>
+        <h2 class="text-3xl font-bold">{{ totalOrders }}</h2>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl shadow">
+        <p class="text-muted-foreground">Estimated Revenue</p>
+        <h2 class="text-3xl font-bold">${{ totalRevenue|number_format(2) }}</h2>
+      </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow">
+      <h2 class="text-2xl font-bold mb-4">Top Ordered Products</h2>
+
+      {% if topProducts is empty %}
+        <p class="text-muted-foreground">No product data yet.</p>
+      {% else %}
+        <div class="space-y-4">
+          {% for product in topProducts %}
+            <div>
+              <div class="flex justify-between mb-1">
+                <span>{{ product.product_type ?: 'Unknown Product' }}</span>
+                <span>{{ product.total }} orders</span>
+              </div>
+
+              <div class="w-full bg-secondary rounded-full h-4">
+                <div class="bg-primary h-4 rounded-full"
+                     style="width: {{ product.total * 20 }}%;">
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="mt-6">
+      <a href="/Sage-Sucre-Website/admin"
+         class="text-primary hover:underline">
+        ← Back to Dashboard
+      </a>
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+
+<section class="py-16 px-4 bg-secondary min-h-screen">
+  <div class="container mx-auto max-w-6xl">
+
+    <h1 class="text-4xl font-bold mb-8">Admin Orders</h1>
+
+    {% if orders is empty %}
+      <div class="bg-white p-8 rounded-xl shadow text-center">
+        <p class="text-muted-foreground">No orders yet.</p>
+      </div>
+    {% else %}
+      <div class="bg-white rounded-xl shadow overflow-hidden">
+        <table class="w-full text-left">
+          <thead class="bg-primary text-white">
+            <tr>
+              <th class="p-4">ID</th>
+              <th class="p-4">Customer</th>
+              <th class="p-4">Email</th>
+              <th class="p-4">Product</th>
+              <th class="p-4">Pickup Date</th>
+              <th class="p-4">Status</th>
+              <th class="p-4">Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for order in orders %}
+              <tr class="border-b">
+                <td class="p-4">#{{ order.id }}</td>
+                <td class="p-4">{{ order.first_name }} {{ order.last_name }}</td>
+                <td class="p-4">{{ order.email }}</td>
+                <td class="p-4">{{ order.product_type }}</td>
+                <td class="p-4">{{ order.pickup_date }}</td>
+                <td class="p-4">
+                  <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">
+                    {{ order.status }}
+                  </span>
+                </td>
+                <td class="p-4">
+                  <a href="/Sage-Sucre-Website/admin/orders/{{ order.id }}"
+                     class="text-primary font-semibold hover:underline">
+                    View
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{% endblock %}

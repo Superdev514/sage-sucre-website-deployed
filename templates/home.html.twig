@@ -1,0 +1,191 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+
+<!-- Hero -->
+<section class="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-secondary to-background">
+  <div class="container mx-auto px-4 py-16 md:py-20">
+    <div class="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+      <div class="text-center md:text-left">
+        <div class="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-primary w-4 h-4">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+          <span class="text-sm text-primary font-medium">Made with love from my home kitchen</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight font-bold tracking-tight">
+          Custom Cakes & Sweet Treats for Your Special Moments
+        </h1>
+        <p class="text-lg text-muted-foreground mb-8 leading-relaxed max-w-md mx-auto md:mx-0">
+          Hi, I'm Sabrina! I create custom cakes, cupcakes, and sweet treats made fresh to order.
+          Every creation is personalized just for you.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+          <a href="/Sage-Sucre-Website/order" class="inline-flex items-center justify-center gap-2 bg-primary text-white px-8 py-3 rounded-full hover:bg-primary/90 transition-all shadow-md">
+            Place an Order
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+          <a href="/Sage-Sucre-Website/menu" class="inline-flex items-center justify-center gap-2 bg-white text-foreground px-8 py-3 rounded-full hover:bg-secondary transition-colors border border-border shadow-sm">
+            View Menu & Pricing
+          </a>
+        </div>
+      </div>
+      <div class="relative">
+        <div class="aspect-square rounded-2xl overflow-hidden shadow-xl">
+          <img src="https://images.unsplash.com/photo-1737700088028-fae0666feb83?w=1080"
+               alt="Custom celebration cake"
+               class="w-full h-full object-cover">
+        </div>
+        <div class="absolute -bottom-4 -right-4 bg-white p-4 rounded-xl shadow-lg border border-border">
+          <div class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-primary w-8 h-8"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            <div>
+              <p class="text-xs text-muted-foreground">Follow me</p>
+              <p class="font-medium text-gray-800">@sagesucre</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="py-16 px-4 bg-white">
+  <div class="container mx-auto max-w-5xl">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold mb-3">How Ordering Works</h2>
+      <p class="text-muted-foreground">Simple and easy! Here's how to get your custom treats</p>
+    </div>
+    <div class="grid md:grid-cols-4 gap-8">
+      <div class="text-center">
+        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="text-2xl text-primary font-bold">1</span>
+        </div>
+        <h3 class="text-lg font-semibold mb-2">Submit Your Order</h3>
+        <p class="text-sm text-muted-foreground">Fill out the order form with your details and design ideas</p>
+      </div>
+      <div class="text-center">
+        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="text-2xl text-primary font-bold">2</span>
+        </div>
+        <h3 class="text-lg font-semibold mb-2">Get a Quote</h3>
+        <p class="text-sm text-muted-foreground">I'll send you a quote within 24 hours via email</p>
+      </div>
+      <div class="text-center">
+        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="text-2xl text-primary font-bold">3</span>
+        </div>
+        <h3 class="text-lg font-semibold mb-2">Confirm & Pay Deposit</h3>
+        <p class="text-sm text-muted-foreground">50% deposit to confirm your order</p>
+      </div>
+      <div class="text-center">
+        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="text-2xl text-primary font-bold">4</span>
+        </div>
+        <h3 class="text-lg font-semibold mb-2">Pickup & Enjoy!</h3>
+        <p class="text-sm text-muted-foreground">Pick up your custom creation and celebrate!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Products -->
+<section class="py-16 px-4 bg-secondary" id="menu-section">
+  <div class="container mx-auto">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold mb-3">What I Make</h2>
+      <p class="text-muted-foreground max-w-2xl mx-auto">From custom celebration cakes to everyday treats, everything is made fresh with quality ingredients</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+      <div class="bg-white rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 card-hover">
+        <div class="aspect-square overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1737700088028-fae0666feb83?w=1080"
+               alt="Custom Cakes" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold mb-2">Custom Cakes</h3>
+          <p class="text-muted-foreground text-sm mb-3">Personalized designs for any celebration</p>
+          <p class="text-primary font-semibold">Starting at $45</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 card-hover">
+        <div class="aspect-square overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1702745572953-9b9181b640d1?w=1080"
+               alt="Cupcakes & Treats" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold mb-2">Cupcakes & Treats</h3>
+          <p class="text-muted-foreground text-sm mb-3">Perfect for parties and events</p>
+          <p class="text-primary font-semibold">From $3 each</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 card-hover">
+        <div class="aspect-square overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1700448293876-07dca826c161?w=1080"
+               alt="Cookies & Brownies" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold mb-2">Cookies & Brownies</h3>
+          <p class="text-muted-foreground text-sm mb-3">Homemade goodness in every bite</p>
+          <p class="text-primary font-semibold">From $2.50</p>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-12">
+      <a href="/Sage-Sucre-Website/menu" class="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all duration-200">
+        See Full Menu & Pricing →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Important Info -->
+<section class="py-16 px-4">
+  <div class="container mx-auto max-w-4xl">
+    <div class="bg-primary/5 border border-primary/20 rounded-xl p-8 shadow-sm">
+      <div class="flex items-start gap-4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="text-primary w-6 h-6 flex-shrink-0 mt-1"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        <div>
+          <h3 class="text-xl font-bold mb-2">Important Order Information</h3>
+          <ul class="text-sm text-muted-foreground space-y-2 list-disc list-inside">
+            <li>All orders require at least 48 hours notice</li>
+            <li>Custom cakes and large orders may need more time</li>
+            <li>50% deposit required to confirm your order</li>
+            <li>Remaining balance due at pickup</li>
+            <li>Pickup available in Plateau (Montreal) & Boisbriand</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Instagram -->
+<section class="py-16 px-4 bg-white">
+  <div class="container mx-auto max-w-4xl text-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" class="text-primary mx-auto mb-4"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+    <h2 class="text-3xl md:text-4xl font-bold mb-4">See My Latest Creations</h2>
+    <p class="text-muted-foreground mb-8 text-lg max-w-md mx-auto">
+      Follow me on Instagram to see photos of my recent work, available products, and special offers!
+    </p>
+    <a href="https://instagram.com/sagesucre" target="_blank" rel="noopener noreferrer"
+       class="inline-flex items-center gap-2 bg-primary text-white px-8 py-3 rounded-full hover:bg-primary/90 transition shadow-md">
+      Follow @sagesucre
+    </a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="py-20 px-4 bg-gradient-to-b from-secondary to-background" id="order-cta">
+  <div class="container mx-auto text-center max-w-3xl">
+    <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Order?</h2>
+    <p class="text-muted-foreground mb-8 text-lg">Let's create something special for your next celebration!</p>
+    <a href="/Sage-Sucre-Website/order"
+       class="inline-flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-full hover:bg-primary/90 transition-all shadow-lg text-lg font-medium">
+      Place Your Order Now →
+    </a>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+
+<section class="py-16 px-4 bg-secondary min-h-screen">
+  <div class="container mx-auto max-w-3xl">
+
+    <h1 class="text-3xl font-bold mb-8">
+      Order #{{ order.id }}
+    </h1>
+
+    <div class="bg-white rounded-xl shadow p-6 mb-6">
+
+      <h2 class="text-xl font-bold mb-4">Customer Info</h2>
+
+      <p><strong>Name:</strong> {{ order.first_name }} {{ order.last_name }}</p>
+      <p><strong>Email:</strong> {{ order.email }}</p>
+      <p><strong>Phone:</strong> {{ order.phone }}</p>
+
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-6 mb-6">
+
+      <h2 class="text-xl font-bold mb-4">Order Details</h2>
+
+      <p><strong>Product:</strong> {{ order.product_type }}</p>
+      <p><strong>Pickup Location:</strong> {{ order.pickup_location }}</p>
+      <p><strong>Date:</strong> {{ order.pickup_date }}</p>
+      <p><strong>Customizations:</strong> {{ order.customizations }}</p>
+
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-6">
+
+      <h2 class="text-xl font-bold mb-4">Update Status</h2>
+
+      <form method="POST"
+            action="/Sage-Sucre-Website/admin/orders/{{ order.id }}/status"
+            class="flex gap-4 items-center">
+
+        <select name="status" class="border p-2 rounded-lg">
+          <option value="Pending" {{ order.status == 'Pending' ? 'selected' : '' }}>Pending</option>
+          <option value="In Progress" {{ order.status == 'In Progress' ? 'selected' : '' }}>In Progress</option>
+          <option value="Confirmed" {{ order.status == 'Confirmed' ? 'selected' : '' }}>Confirmed</option>
+          <option value="Completed" {{ order.status == 'Completed' ? 'selected' : '' }}>Completed</option>
+        </select>
+
+        <button type="submit"
+                class="bg-primary text-white px-4 py-2 rounded-lg">
+          Update
+        </button>
+
+      </form>
+
+    </div>
+
+    <div class="mt-6">
+      <a href="/Sage-Sucre-Website/admin/orders"
+         class="text-primary hover:underline">
+        ← Back to Orders
+      </a>
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}

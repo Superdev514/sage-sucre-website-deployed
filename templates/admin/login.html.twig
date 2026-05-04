@@ -1,0 +1,27 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+
+<section class="py-16 px-4 bg-secondary min-h-screen">
+  <div class="max-w-md mx-auto bg-white p-8 rounded-2xl shadow">
+    <h1 class="text-3xl font-bold text-center mb-6">Admin Login</h1>
+
+    <form method="POST" action="/Sage-Sucre-Website/admin/login" class="space-y-5">
+      <div>
+        <label class="block font-semibold mb-2">Email</label>
+        <input type="email" name="email" required class="w-full border p-3 rounded-lg">
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-2">Password</label>
+        <input type="password" name="password" required class="w-full border p-3 rounded-lg">
+      </div>
+
+      <button type="submit" class="w-full bg-primary text-white py-3 rounded-lg font-semibold">
+        Login
+      </button>
+    </form>
+  </div>
+</section>
+
+{% endblock %}

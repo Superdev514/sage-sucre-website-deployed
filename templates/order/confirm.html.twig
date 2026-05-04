@@ -1,0 +1,54 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+
+<section class="py-16 px-4 min-h-screen bg-secondary">
+  <div class="container mx-auto max-w-2xl">
+    <div class="bg-white rounded-2xl shadow-sm border border-border p-10 text-center">
+      <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-600"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </div>
+      <h1 class="text-3xl font-bold mb-4">Order Received! 🎉</h1>
+      <p class="text-muted-foreground mb-8">
+        Thank you, <strong>{{ order.first_name }}</strong>! Your order request has been submitted successfully.
+        I'll review your request and get back to you at <strong>{{ order.email }}</strong> within 24 hours with a quote.
+      </p>
+
+      <div class="bg-secondary rounded-xl p-6 text-left mb-8">
+        <h2 class="font-bold text-lg mb-4">Order Summary</h2>
+        <div class="space-y-2 text-sm">
+          <div class="flex justify-between">
+            <span class="text-muted-foreground">Name</span>
+            <span class="font-medium">{{ order.first_name }} {{ order.last_name }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-muted-foreground">Product</span>
+            <span class="font-medium">{{ order.product_type }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-muted-foreground">Pickup Location</span>
+            <span class="font-medium">{{ order.pickup_location }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-muted-foreground">Desired Pickup Date</span>
+            <span class="font-medium">{{ order.pickup_date }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-muted-foreground">Status</span>
+            <span class="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full text-xs font-medium">{{ order.status }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-primary/5 border border-primary/20 rounded-xl p-4 text-sm text-muted-foreground mb-8">
+        💳 A <strong>50% deposit</strong> will be required to confirm your order once you receive your quote.
+      </div>
+
+      <a href="/Sage-Sucre-Website/" class="inline-flex items-center gap-2 bg-primary text-white px-8 py-3 rounded-full hover:bg-primary/90 transition shadow-md">
+        Back to Home
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
