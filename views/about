@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>About Sage Sucre | Sabrina's Sweet Studio – Custom Cakes & Treats</title>
+  <!-- Tailwind + Google Fonts + Font Awesome Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#e07a5f',
+            secondary: '#fdf3e7',
+            background: '#fffaf5',
+            foreground: '#2c2b28',
+            muted: {
+              foreground: '#6b6a66',
+              DEFAULT: '#f8f4ef',
+            },
+            border: '#e9e2d8',
+            card: '#ffffff',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'sans-serif'],
+          },
+          borderRadius: {
+            'xl': '1rem',
+            '2xl': '1.5rem',
+          },
+          animation: {
+            'fade-up': 'fadeUp 0.6s ease-out',
+          },
+          keyframes: {
+            fadeUp: { '0%': { opacity: '0', transform: 'translateY(15px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <style>
+    body { background: #fffaf5; }
+    .section-fade {
+      animation: fadeUp 0.6s ease forwards;
+    }
+    .hover-image-scale {
+      overflow: hidden;
+      transition: transform 0.4s ease;
+    }
+    .hover-image-scale img {
+      transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+    .hover-image-scale:hover img {
+      transform: scale(1.04);
+    }
+    .faq-card {
+      transition: all 0.2s ease;
+    }
+    .faq-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 20px -12px rgba(0, 0, 0, 0.08);
+    }
+  </style>
+</head>
+<body class="font-sans text-foreground antialiased">
+
+  <div class="min-h-screen flex flex-col">
+    <!-- Header / Hero Section -->
+    <section class="py-16 px-4 text-center bg-secondary border-b border-border/40">
+      <div class="container mx-auto max-w-3xl">
+        <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">About Sage Sucre</h1>
+        <p class="text-muted-foreground text-lg max-w-2xl mx-auto">
+          Meet Sabrina and learn about the sweet journey behind Sage Sucre
+        </p>
+      </div>
+    </section>
+
+    <!-- Main Story: first block (Hi I'm Sabrina + image) -->
+    <section class="py-16 px-4">
+      <div class="container mx-auto max-w-5xl">
+        <div class="grid md:grid-cols-2 gap-12 items-center mb-20">
+          <div class="section-fade">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Hi, I'm Sabrina!</h2>
+            <p class="text-muted-foreground mb-4 leading-relaxed">
+              Welcome to Sage Sucre! I'm so glad you're here. What started as a hobby of baking 
+              for friends and family has blossomed into a passion for creating custom cakes and 
+              sweet treats for the community.
+            </p>
+            <p class="text-muted-foreground mb-4 leading-relaxed">
+              Every cake and treat I make is crafted with love from my home kitchen. I believe 
+              that desserts aren't just about satisfying a sweet tooth—they're about creating 
+              memories and celebrating life's special moments, big and small.
+            </p>
+            <p class="text-muted-foreground leading-relaxed">
+              The name "Sage Sucre" combines wisdom (sage) with sweetness (sucre in French). 
+              It represents my approach to baking: using tried-and-true recipes while adding 
+              creative touches that make each creation unique and special.
+            </p>
+          </div>
+          <div class="aspect-[3/4] rounded-xl overflow-hidden shadow-lg hover-image-scale">
+            <img src="https://images.unsplash.com/photo-1627308593341-d886acdc06a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnRpc2FuJTIwYnJlYWQlMjBiYWtpbmd8ZW58MXx8fHwxNzc0NDkzMzY2fDA&ixlib=rb-4.1.0&q=80&w=1080" 
+                 alt="Sabrina baking in kitchen" class="w-full h-full object-cover">
+          </div>
+        </div>
+
+        <!-- second row: Made Fresh, Just for You & image -->
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="aspect-[3/4] rounded-xl overflow-hidden shadow-lg md:order-2 hover-image-scale">
+            <img src="https://images.unsplash.com/photo-1760661642486-bf574784273b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiYWtlcnklMjBpbnRlcmlvciUyMG1vZGVybnxlbnwxfHx8fDE3NzQ1MzMyNTl8MA&ixlib=rb-4.1.0&q=80&w=1080" 
+                 alt="Modern baking setup, fresh ingredients" class="w-full h-full object-cover">
+          </div>
+          <div class="md:order-1 section-fade">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Made Fresh, Just for You</h2>
+            <p class="text-muted-foreground mb-4 leading-relaxed">
+              Every order is made from scratch using quality ingredients. I don't mass-produce 
+              or keep items in stock—each creation is baked specifically for you and your event.
+            </p>
+            <p class="text-muted-foreground mb-4 leading-relaxed">
+              I love working with customers to bring their vision to life. Whether you have a 
+              detailed design in mind or just a general idea, I'm here to help create something 
+              perfect for your celebration.
+            </p>
+            <p class="text-muted-foreground leading-relaxed">
+              Thank you for supporting my small business and trusting me with your special 
+              occasions. It means the world to me!
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- What Makes Sage Sucre Special (3 icons) -->
+    <section class="py-20 px-4 bg-secondary">
+      <div class="container mx-auto max-w-5xl">
+        <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">What Makes Sage Sucre Special</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="bg-white p-8 rounded-2xl shadow-sm text-center transition-all hover:shadow-md hover:-translate-y-1 duration-300">
+            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-5">
+              <i class="fas fa-heart text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Made with Love</h3>
+            <p class="text-sm text-muted-foreground leading-relaxed">
+              Every treat is handcrafted with care and attention to detail. 
+              I pour my heart into each creation.
+            </p>
+          </div>
+          <div class="bg-white p-8 rounded-2xl shadow-sm text-center transition-all hover:shadow-md hover:-translate-y-1 duration-300">
+            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-5">
+              <i class="fas fa-users text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Personalized Service</h3>
+            <p class="text-sm text-muted-foreground leading-relaxed">
+              Work directly with me to customize every detail. 
+              No middlemen, just personal attention to your order.
+            </p>
+          </div>
+          <div class="bg-white p-8 rounded-2xl shadow-sm text-center transition-all hover:shadow-md hover:-translate-y-1 duration-300">
+            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-5">
+              <i class="fas fa-clock text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Always Fresh</h3>
+            <p class="text-sm text-muted-foreground leading-relaxed">
+              Nothing is pre-made or frozen. Your order is baked 
+              fresh specifically for your pickup date.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 px-4">
+      <div class="container mx-auto max-w-4xl">
+        <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">Frequently Asked Questions</h2>
+        <div class="space-y-5">
+          <div class="bg-white border border-border rounded-xl p-6 faq-card shadow-sm">
+            <h3 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="fas fa-calendar-week text-primary text-sm"></i> How far in advance should I order?</h3>
+            <p class="text-muted-foreground text-sm leading-relaxed">
+              I require at least 48 hours notice for all orders. For custom cakes and large orders, 
+              I recommend placing your order 1-2 weeks in advance to ensure availability.
+            </p>
+          </div>
+          <div class="bg-white border border-border rounded-xl p-6 faq-card shadow-sm">
+            <h3 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="fas fa-truck text-primary text-sm"></i> Do you offer delivery?</h3>
+            <p class="text-muted-foreground text-sm leading-relaxed">
+              Currently, I offer pickup from my home kitchen or we can arrange a meetup point. 
+              For special circumstances, delivery may be arranged for an additional fee. Let's discuss your needs!
+            </p>
+          </div>
+          <div class="bg-white border border-border rounded-xl p-6 faq-card shadow-sm">
+            <h3 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="fas fa-apple-alt text-primary text-sm"></i> Can you accommodate dietary restrictions?</h3>
+            <p class="text-muted-foreground text-sm leading-relaxed">
+              Yes! I can work with various dietary needs including gluten-free, dairy-free, and vegan options. 
+              Please mention your requirements in the order form so I can provide an accurate quote.
+            </p>
+          </div>
+          <div class="bg-white border border-border rounded-xl p-6 faq-card shadow-sm">
+            <h3 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="fas fa-exchange-alt text-primary text-sm"></i> What if I need to cancel or change my order?</h3>
+            <p class="text-muted-foreground text-sm leading-relaxed">
+              Life happens! Please contact me as soon as possible. Depending on timing, we can usually 
+              work something out. Note that deposits are non-refundable if cancellation occurs less than 48 hours before pickup.
+            </p>
+          </div>
+          <div class="bg-white border border-border rounded-xl p-6 faq-card shadow-sm">
+            <h3 class="text-lg font-bold mb-2 flex items-center gap-2"><i class="fas fa-credit-card text-primary text-sm"></i> How do I pay for my order?</h3>
+            <p class="text-muted-foreground text-sm leading-relaxed">
+              After you approve your quote, I'll send payment instructions. I accept e-transfer and other methods. 
+              A 50% deposit is required to confirm your order, and the remaining balance is due at pickup.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section: Let's Create Something Sweet! -->
+    <section class="py-20 px-4 bg-primary/5 border-t border-primary/10">
+      <div class="container mx-auto max-w-3xl text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-5">Let's Create Something Sweet!</h2>
+        <p class="text-muted-foreground mb-8 text-lg">
+          I can't wait to work with you on your next celebration. 
+          Place your order today and let's make it special!
+        </p>
+        <div class="flex flex-col sm:flex-row gap-5 justify-center">
+          <a href="#" class="inline-flex items-center justify-center gap-2 bg-primary text-white px-8 py-3 rounded-full hover:bg-primary/90 transition-all shadow-md text-base font-medium">
+            <i class="fas fa-cake-candles"></i> Place an Order
+          </a>
+          <a href="https://instagram.com/sagesucre" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 bg-white text-foreground px-8 py-3 rounded-full hover:bg-secondary transition-colors border border-border shadow-sm">
+            <i class="fab fa-instagram text-primary"></i> Follow on Instagram
+          </a>
+        </div>
+        <p class="text-xs text-muted-foreground mt-6">📍 Serving Montreal, Gatineau, Ottawa & surrounding areas</p>
+      </div>
+    </section>
+
+    <!-- Simple Footer -->
+    <footer class="bg-white border-t border-border py-8 text-center text-sm text-muted-foreground">
+      <div class="container mx-auto px-4">
+        <p>🍰 Sage Sucre — handmade with love by Sabrina. Every bite tells a story.</p>
+        <div class="mt-2 flex justify-center gap-5">
+          <a href="#" class="hover:text-primary transition">Home</a>
+          <a href="#" class="hover:text-primary transition">Menu</a>
+          <a href="#" class="hover:text-primary transition">Order</a>
+          <a href="https://instagram.com/sagesucre" target="_blank" class="hover:text-primary transition">Instagram</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Simple smooth scrolling for any hash links (demo) -->
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href === "#" || href === "#/") return;
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

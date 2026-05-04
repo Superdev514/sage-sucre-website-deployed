@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Place Your Order | Sabrina's Sweet Studio – Custom Cakes & Treats</title>
+  <!-- Tailwind + Google Fonts + Sonner Toast -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sonner@1.5.0/dist/styles/index.css">
+  <script src="https://cdn.jsdelivr.net/npm/sonner@1.5.0/dist/index.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#e07a5f',
+            secondary: '#fdf3e7',
+            background: '#fffaf5',
+            foreground: '#2c2b28',
+            muted: {
+              foreground: '#6b6a66',
+              DEFAULT: '#f8f4ef',
+            },
+            border: '#e9e2d8',
+            card: '#ffffff',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'sans-serif'],
+          },
+          borderRadius: {
+            'xl': '1rem',
+            '2xl': '1.5rem',
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Fixed focus ring styling - using box-shadow instead of invalid 'ring' property */
+    input:focus-visible, 
+    textarea:focus-visible, 
+    select:focus-visible,
+    button:focus-visible,
+    a:focus-visible,
+    [tabindex]:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #e07a5f;
+      border-radius: 0.5rem;
+      transition: box-shadow 0.15s ease;
+    }
+    
+    /* For file upload label */
+    label[for="inspirationPhotos"]:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #e07a5f;
+      border-radius: 0.5rem;
+    }
+    
+    /* Ensure inputs don't clip the ring */
+    input, textarea, select {
+      border-radius: 0.75rem;
+    }
+    
+    /* Smooth transitions */
+    .btn-transition {
+      transition: all 0.2s ease;
+    }
+    
+    body {
+      background: #fffaf5;
+    }
+    
+    /* Custom file upload hover effect */
+    .file-drop-zone:hover {
+      background-color: rgba(224, 122, 95, 0.05);
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+</head>
+<body class="font-sans text-foreground antialiased">
+
+  <div id="root-order" class="min-h-screen flex flex-col"></div>
+
+  <script>
+    const toast = window.sonner;
+    let orderSubmitted = false;
+    let selectedFiles = [];
+    
+    function updateUI() {
+      const container = document.getElementById('root-order');
+      if (orderSubmitted) {
+        container.innerHTML = renderOrderSuccess();
+        attachSuccessHandlers();
+      } else {
+        container.innerHTML = renderOrderForm();
+        attachFormHandlers();
+      }
+    }
+    
+    function handleFileChange(e) {
+      if (e.target.files) {
+        selectedFiles = Array.from(e.target.files);
+        const fileListDiv = document.getElementById('selectedFilesList');
+        if (fileListDiv) {
+          if (selectedFiles.length > 0) {
+            fileListDiv.innerHTML = `
+              <p class="text-sm text-muted-foreground mb-2 mt-3">${selectedFiles.length} file(s) selected:</p>
+              <ul class="text-xs text-muted-foreground space-y-1">
+                ${selectedFiles.map((file, idx) => `<li class="flex items-center gap-2"><svg class="w-3 h-3 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>${escapeHtml(file.name)}</li>`).join('')}
+              </ul>
+            `;
+          } else {
+            fileListDiv.innerHTML = '';
+          }
+        }
+      }
+    }
+    
+    function escapeHtml(str) {
+      return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+      });
+    }
+    
+    function handleSubmit(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const orderData = {
+        firstName: formData.get('firstName'),
+        lastName: formData.get('lastName'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+        productType: formData.get('productType'),
+        customization: formData.get('customization'),
+        designDetails: formData.get('designDetails'),
+        servings: formData.get('servings'),
+        pickupDate: formData.get('pickupDate'),
+        pickupLocation: formData.get('pickupLocation'),
+        specialRequests: formData.get('specialRequests'),
+        inspirationPhotosCount: selectedFiles.length
+      };
+      console.log('Order submitted:', orderData);
+      
+      orderSubmitted = true;
+      if (toast && toast.success) {
+        toast.success("Order request submitted! I'll contact you soon via email.", {
+          duration: 4000,
+          position: 'top-center',
+          style: { background: '#fff', borderLeft: '4px solid #e07a5f' }
+        });
+      } else {
+        alert("Order request submitted! I'll contact you soon via email.");
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      updateUI();
+    }
+    
+    function attachFormHandlers() {
+      const fileInput = document.getElementById('inspirationPhotos');
+      if (fileInput) {
+        fileInput.addEventListener('change', handleFileChange);
+      }
+      
+      const pickupDateInput = document.getElementById('pickupDate');
+      if (pickupDateInput) {
+        const minDate = new Date();
+        minDate.setDate(minDate.getDate() + 2);
+        pickupDateInput.min = minDate.toISOString().split('T')[0];
+      }
+      
+      const orderForm = document.getElementById('orderFormElement');
+      if (orderForm) {
+        orderForm.addEventListener('submit', handleSubmit);
+      }
+      
+      const cancelBtn = document.getElementById('cancelOrderBtn');
+      if (cancelBtn) {
+        cancelBtn.addEventListener('click', () => window.history.back());
+      }
+      
+      // Add focus-visible class support for older browsers
+      if (typeof window !== 'undefined') {
+        document.querySelectorAll('input, textarea, select, button').forEach(el => {
+          el.addEventListener('focus', function(e) {
+            if (e.target.matches(':focus-visible')) {
+              e.target.style.boxShadow = '0 0 0 2px #ffffff, 0 0 0 4px #e07a5f';
+            }
+          });
+        });
+      }
+    }
+    
+    function attachSuccessHandlers() {
+      const newOrderBtn = document.getElementById('newOrderBtn');
+      if (newOrderBtn) {
+        newOrderBtn.addEventListener('click', () => {
+          orderSubmitted = false;
+          selectedFiles = [];
+          updateUI();
+        });
+      }
+      
+      const homeBtn = document.getElementById('homeBtn');
+      if (homeBtn) {
+        homeBtn.addEventListener('click', () => {
+          window.location.href = '/';
+        });
+      }
+    }
+    
+    function renderOrderSuccess() {
+      return `
+        <div class="min-h-[80vh] flex items-center justify-center px-4 py-12">
+          <div class="max-w-2xl w-full text-center">
+            <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg class="w-10 h-10 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-bold mb-4">Order Request Received!</h1>
+            <p class="text-muted-foreground mb-6 leading-relaxed">
+              Thank you for your order request! I've received all your details and will get back to you 
+              within 24 hours via email to discuss your order, provide a quote, and confirm all the details.
+            </p>
+            <div class="bg-secondary p-6 rounded-lg mb-8 text-left">
+              <h3 class="font-semibold mb-3 text-lg">What happens next?</h3>
+              <ol class="text-sm text-muted-foreground space-y-2 list-decimal list-inside">
+                <li>I'll review your order request and any inspiration photos you submitted</li>
+                <li>I'll send you a detailed quote within 24 hours</li>
+                <li>Once you approve the quote, I'll request a 50% deposit to confirm your order</li>
+                <li>I'll create your custom order and contact you when it's ready for pickup</li>
+                <li>The remaining 50% balance will be due at pickup</li>
+              </ol>
+            </div>
+            <div class="flex gap-4 justify-center flex-wrap">
+              <button id="newOrderBtn" class="inline-flex items-center justify-center px-6 py-2.5 border border-border rounded-full hover:bg-secondary transition-colors focus:outline-none focus:shadow-[0_0_0_2px_#ffffff,0_0_0_4px_#e07a5f]">Submit Another Order</button>
+              <button id="homeBtn" class="inline-flex items-center justify-center px-6 py-2.5 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors focus:outline-none focus:shadow-[0_0_0_2px_#ffffff,0_0_0_4px_#e07a5f]">Back to Home</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    
+    function renderOrderForm() {
+      const minDateForInput = (() => {
+        const d = new Date();
+        d.setDate(d.getDate() + 2);
+        return d.toISOString().split('T')[0];
+      })();
+      
+      return `
+        <div>
+          <!-- Header -->
+          <section class="py-12 px-4 text-center bg-secondary border-b border-border/30">
+            <div class="container mx-auto max-w-3xl">
+              <h1 class="text-4xl md:text-5xl font-bold mb-4">Place Your Order</h1>
+              <p class="text-muted-foreground text-lg">Fill out the form below to request your custom cake or sweet treat. I'll get back to you within 24 hours with a quote!</p>
+            </div>
+          </section>
+
+          <!-- Order Form -->
+          <section class="py-12 px-4">
+            <div class="container mx-auto max-w-3xl">
+              <form id="orderFormElement" class="space-y-8">
+                <!-- Contact Information -->
+                <div class="bg-white border border-border rounded-xl p-6 shadow-sm">
+                  <h2 class="text-2xl font-bold mb-6">Contact Information</h2>
+                  <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label for="firstName" class="block text-sm font-medium mb-2">First Name <span class="text-primary">*</span></label>
+                      <input type="text" id="firstName" name="firstName" required class="w-full px-4 py-2 border border-border rounded-xl focus:outline-none focus:shadow-[0_0_0_2px_#ffffff,0_0_0_4px_#e07a5f] transition-shadow" placeholder="First name">
+                    </div>
+                    <div>
+                      <label for="lastName" class="block text-sm font-medium mb-2">Last Name <span class="text-primary">*</span></label>
+                      <input type="text" id="lastName" name="lastName" required class="w-full px-4 py-2 border border-border rounded-xl focus:outline-none focus:shadow-[0_0_0_2px_#ffffff,0_0_0_4px_#e07a5f] transition-shadow" placeholder="Last name">
+                    </div>
+                  </div>
+                  <div class="grid md:grid-cols-2 gap-6 mt-6">
+                    <div>
+                      <label for="email" class="block text-sm font-medium mb-2">Email Address <span class="text-primary">*</span></label>
+                      <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-border rounded-xl focus:outline-none focus:shadow-[0_0_0_2px_#ffffff,0_0_0_4px_#e07a5f] transition-shadow" placeholder="your.email@example.com">
+                    </div>
+                    <div>
+                      <label for="phone" class="block text-sm font-medium mb-2">Phone Number <span class="text-primary">*</span></label>
+                      <input type="tel" id="phone" name="phone" required class="w-full px-4 py-2 border border-border rounded-xl focus:outline-none focus:shadow-[0_0_0_2px_#ffffff,0_0_0_4px_#e07a5f] transition-shadow" placeholder="(514) 555-1234">
+                    </div>
+                  </div>
+                  <p class="text-xs text-muted-foreground mt-3">I'll send your quote and order updates to your email</p>
+                </div>
+
+                <!-- Order Details -->
+                <div class="bg-white border border-border rounded-xl p-6 shadow-sm">
+                  <h2 class="text-2xl font-bold mb-6">Order Details</h2>
+                  <div class="space-y-6">
+                    <div>
+                      <label for="productType" class="block text-sm font-medium mb-2">Product Type <span class="text-primary">*</span></label>
+                      <select id="productType" name="productType" required class="w-full px-4 py-2 border border-border rounded-xl focus:outline-none focus:shadow-[0_0_0_2px_#ffffff,0_0_0_4px_#e07a5f] transition-shadow bg-white">
+                        <option value="" disabled selected>Select product type</option>
+                        <option value="custom-cake">Custom Cake</option>
+                        <option value="cupcakes">Cupcakes</option>
+                        <option value="cookies">Cookies</option>
+                        <option value="macarons">Macarons</option>
+                        <option value="cake-pops">Cake Pops</option>
+                        <option value="brownies">Brownies</option>
+                        <option value="other">Other (specify in details)</option>
+                      </select>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <label for="servings" class="block text-sm font-medium mb-2">Number of Servings/Pieces <span class="text-primary">*</span></label>
+                        <input type="text" id="servings" name="servings" required class="w-full px-4 py-2 border border-border rounded-xl focus:outline-none focus:shadow-[0_0_0_2px_#ffffff,0_0_0_4px_#e07a5f] transition-shadow" placeholder="e.g., 12 servings or 24 cupcakes">
+                      </div>
+                      <div>
+                        <label for="customization" class="block text-sm font-medium mb-2">Customization Level <span class="text-primary">*</span></label>
+                        <select id="customization" name="customization" required class="w-full px-4 py-2 border border-border rounded-xl focus:outline-none focus:shadow-[0_0_0_2px_#ffffff,0_0_0_4px_#e07a5f] transition-shadow bg-white">
+                          <option value="" disabled selected>Select level</option>
+                          <option value="simple">Simple (minimal decoration)</option>
+                          <option value="moderate">Moderate (some custom elements)</option>
+                          <option value="elaborate">Elaborate (fully custom design)</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div>
+                      <label for="designDetails" class="block text-sm font-medium mb-2">Design & Flavor Details <span class="text-primary">*</span></label>
+                      <textarea id="designDetails" name="designDetails" required rows="4" class="w-full px-4 py-2 border border-border rounded-xl focus:outline-none focus:shadow-[0_0_0_2px_#ffffff,0_0_0_4px_#e07a5f] transition-shadow" placeholder="Please describe your desired flavors, colors, theme, and any specific design elements you'd like. Be as detailed as possible!"></textarea>
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium mb-2">Inspiration Photos (Optional)</label>
+                      <div class="border-2 border-dashed border-border rounded-xl p-6 text-center file-drop-zone transition-colors">
+                        <input type="file" id="inspirationPhotos" name="inspirationPhotos" multiple accept="image/*" class="hidden" />
+                        <label for="inspirationPhotos" class="cursor-pointer block focus:outline-none focus:shadow-[0_0_0_2px_#ffffff,0_0_0_4px_#e07a5f] rounded-lg p-2">
+                          <svg class="w-8 h-8 text-muted-foreground mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                          <p class="text-sm text-muted-foreground mb-1">Click to upload inspiration photos</p>
+                          <p class="text-xs text-muted-foreground">You can upload multiple images</p>
+                        </label>
+                      </div>
+                      <div id="selectedFilesList" class="mt-2"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Pickup Details -->
+                <div class="bg-white border border-border rounded-xl p-6 shadow-sm">
+                  <h2 class="text-2xl font-bold mb-6">Pickup Details</h2>
+                  <div class="space-y-6">
+                    <div>
+                      <label for="pickupDate" class="block text-sm font-medium mb-2">Preferred Pickup Date <span class="text-primary">*</span></label>
+                      <div class="relative">
+                        <input type="date" id="pickupDate" name="pickupDate" required min="${minDateForInput}" class="w-full px-4 py-2 border border-border rounded-xl focus:outline-none focus:shadow-[0_0_0_2px_#ffffff,0_0_0_4px_#e07a5f] transition-shadow pr-10">
+                        <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                      </div>
+                      <p class="text-xs text-muted-foreground mt-1">Please allow at least 48 hours notice for all orders</p>
+                    </div>
+                    <div>
+                      <label for="pickupLocation" class="block text-sm font-medium mb-2">Preferred Pickup Location <span class="text-primary">*</span></label>
+                      <select id="pickupLocation" name="pickupLocation" required class="w-full px-4 py-2 border border-border rounded-xl focus:outline-none focus:shadow-[0_0_0_2px_#ffffff,0_0_0_4px_#e07a5f] transition-shadow bg-white">
+                        <option value="" disabled selected>Select pickup location</option>
+                        <option value="montreal">Montreal</option>
+                        <option value="gatineau">Gatineau</option>
+                        <option value="ottawa">Ottawa</option>
+                        <option value="plateau-montreal">Plateau Montreal</option>
+                        <option value="boisbriand-montreal">Boisbriand Montreal</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label for="specialRequests" class="block text-sm font-medium mb-2">Special Requests or Dietary Requirements</label>
+                      <textarea id="specialRequests" name="specialRequests" rows="3" class="w-full px-4 py-2 border border-border rounded-xl focus:outline-none focus:shadow-[0_0_0_2px_#ffffff,0_0_0_4px_#e07a5f] transition-shadow" placeholder="Any allergies, dietary restrictions (gluten-free, vegan, etc.), or special requests?"></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Payment Info -->
+                <div class="bg-primary/5 border border-primary/20 rounded-xl p-6">
+                  <h3 class="text-lg font-semibold mb-3">Payment Process</h3>
+                  <ol class="text-sm text-muted-foreground space-y-2 list-decimal list-inside">
+                    <li>After you submit this form, I'll send you a detailed quote via email</li>
+                    <li>Once you approve the quote, a 50% deposit is required to confirm your order</li>
+                    <li>I'll provide payment instructions (e-transfer or other methods)</li>
+                    <li>The remaining 50% balance is due at pickup</li>
+                  </ol>
+                </div>
+
+                <!-- Submit & cancel buttons -->
+                <div class="flex gap-4 justify-end pt-4">
+                  <button type="button" id="cancelOrderBtn" class="px-6 py-2.5 border border-border rounded-full hover:bg-secondary transition-colors focus:outline-none focus:shadow-[0_0_0_2px_#ffffff,0_0_0_4px_#e07a5f]">Cancel</button>
+                  <button type="submit" class="px-8 py-2.5 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors shadow-sm focus:outline-none focus:shadow-[0_0_0_2px_#ffffff,0_0_0_4px_#e07a5f]">Submit Order Request</button>
+                </div>
+              </form>
+            </div>
+          </section>
+
+          <!-- Help Section -->
+          <section class="py-12 px-4 bg-secondary">
+            <div class="container mx-auto max-w-3xl text-center">
+              <h2 class="text-2xl font-bold mb-4">Need Help?</h2>
+              <p class="text-muted-foreground mb-6">Have questions before placing your order? Feel free to reach out!</p>
+              <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://instagram.com/sagesucre" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 bg-white text-foreground px-6 py-3 rounded-full hover:bg-white/80 transition-colors border border-border focus:outline-none focus:shadow-[0_0_0_2px_#ffffff,0_0_0_4px_#e07a5f]">Message me on Instagram</a>
+                <a href="mailto:hello@sagesucre.com" class="inline-flex items-center justify-center gap-2 bg-white text-foreground px-6 py-3 rounded-full hover:bg-white/80 transition-colors border border-border focus:outline-none focus:shadow-[0_0_0_2px_#ffffff,0_0_0_4px_#e07a5f]">Send me an email</a>
+              </div>
+            </div>
+          </section>
+        </div>
+      `;
+    }
+    
+    init();
+    
+    function init() {
+      updateUI();
+    }
+  </script>
+</body>
+</html>

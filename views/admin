@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Admin Dashboard | Sage Sucre – Orders, Calendar & Analytics</title>
+  <!-- Tailwind CSS + Google Fonts + Font Awesome Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Flatpickr for date picker fallback (lightweight) but we will use native date + custom calendar display -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#e07a5f',
+            secondary: '#fdf3e7',
+            background: '#fffaf5',
+            foreground: '#2c2b28',
+            muted: {
+              foreground: '#6b6a66',
+              DEFAULT: '#f8f4ef',
+            },
+            border: '#e9e2d8',
+            card: '#ffffff',
+            destructive: '#e07a5f',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'sans-serif'],
+          },
+          borderRadius: {
+            'xl': '1rem',
+            '2xl': '1.5rem',
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background: #fffaf5; }
+    .card-hover { transition: all 0.2s ease; }
+    .badge-pill { border-radius: 9999px; }
+    .tab-active {
+      background-color: #e07a5f !important;
+      color: white !important;
+    }
+    .calendar-day-blocked {
+      background-color: #fecaca !important;
+      color: #991b1b !important;
+      text-decoration: line-through;
+      position: relative;
+      border-radius: 9999px;
+    }
+    .modal-transition {
+      transition: opacity 0.2s ease;
+    }
+  </style>
+</head>
+<body class="font-sans text-foreground antialiased">
+
+<div id="admin-root" class="min-h-screen bg-gradient-to-b from-background to-secondary/20"></div>
+
+<script>
+  // ---------- MOCK DATA ----------
+  let ordersData = [
+    {
+      id: "ORD-001",
+      customerName: "Emily Johnson",
+      email: "emily@email.com",
+      phone: "(555) 123-4567",
+      productType: "Custom Cake",
+      isCustom: true,
+      flavors: "Vanilla with chocolate ganache",
+      size: "3-tier (serves 50-75)",
+      designPreferences: "Elegant floral design with sage green accents",
+      pickupDate: "2026-04-15",
+      pickupLocation: "Downtown Studio",
+      status: "pending_quote",
+      price: null,
+      depositPaid: false,
+      createdAt: "2026-04-01",
+    },
+    {
+      id: "ORD-002",
+      customerName: "Michael Chen",
+      email: "michael@email.com",
+      phone: "(555) 234-5678",
+      productType: "Classic Chocolate Cake",
+      isCustom: false,
+      size: "9-inch round (serves 12-16)",
+      pickupDate: "2026-04-10",
+      pickupLocation: "Main Kitchen",
+      status: "being_baked",
+      price: 65,
+      depositPaid: true,
+      createdAt: "2026-03-28",
+    },
+    {
+      id: "ORD-003",
+      customerName: "Sarah Martinez",
+      email: "sarah@email.com",
+      phone: "(555) 345-6789",
+      productType: "Lemon Raspberry Cake",
+      isCustom: false,
+      size: "8-inch round (serves 8-12)",
+      pickupDate: "2026-04-08",
+      pickupLocation: "Ottawa",
+      status: "done",
+      price: 55,
+      depositPaid: true,
+      createdAt: "2026-03-25",
+    },
+    {
+      id: "ORD-004",
+      customerName: "David Wilson",
+      email: "david@email.com",
+      phone: "(555) 456-7890",
+      productType: "Custom Wedding Cake",
+      isCustom: true,
+      flavors: "Red velvet with cream cheese frosting",
+      size: "4-tier (serves 100+)",
+      designPreferences: "Minimalist white with gold leaf details",
+      pickupDate: "2026-05-20",
+      pickupLocation: "Plateau Montreal",
+      status: "design_approved",
+      price: 450,
+      depositPaid: true,
+      createdAt: "2026-03-20",
+    },
+  ];
+
+  // Blocked dates per location (string representation)
+  let blockedDatesStore = {
+    "Montreal": ["2026-04-12", "2026-04-13", "2026-04-19"],
+    "Gatineau": ["2026-04-08", "2026-04-18"],
+    "Ottawa": ["2026-04-15"],
+    "Plateau Montreal": ["2026-04-22"],
+    "Boisbriand Montreal": ["2026-04-25"],
+  };
+
+  const locations = ["Montreal", "Gatineau", "Ottawa", "Plateau Montreal", "Boisbriand Montreal"];
+  let currentTab = "orders";
+  let selectedLocation = "Montreal";
+  let selectedOrderForQuote = null;
+  let quoteAmount = "";
+  let quoteNotes = "";
+  let showQuoteModal = false;
+
+  // Helper functions
+  function formatDate(dateStr) {
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  function getStatusBadge(status) {
+    const config = {
+      pending_quote: { label: "Pending Quote", class: "bg-gray-100 text-gray-700" },
+      quote_sent: { label: "Quote Sent", class: "bg-blue-100 text-blue-700" },
+      deposit_received: { label: "Deposit Received", class: "bg-indigo-100 text-indigo-700" },
+      design_approved: { label: "Design Approved", class: "bg-purple-100 text-purple-700" },
+      being_baked: { label: "Being Baked", class: "bg-amber-100 text-amber-800" },
+      done: { label: "Done", class: "bg-green-100 text-green-700" },
+    };
+    const cfg = config[status] || { label: status, class: "bg-gray-100" };
+    return `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${cfg.class}">${cfg.label}</span>`;
+  }
+
+  function updateOrderStatus(orderId, newStatus) {
+    ordersData = ordersData.map(order => order.id === orderId ? { ...order, status: newStatus } : order);
+    renderApp();
+  }
+
+  function sendQuote(orderId) {
+    if (!quoteAmount) return;
+    ordersData = ordersData.map(order => 
+      order.id === orderId ? { ...order, status: "quote_sent", price: parseFloat(quoteAmount) } : order
+    );
+    quoteAmount = "";
+    quoteNotes = "";
+    showQuoteModal = false;
+    selectedOrderForQuote = null;
+    renderApp();
+  }
+
+  function toggleDateBlock(location, dateStr) {
+    const blocked = blockedDatesStore[location] || [];
+    if (blocked.includes(dateStr)) {
+      blockedDatesStore[location] = blocked.filter(d => d !== dateStr);
+    } else {
+      blockedDatesStore[location] = [...blocked, dateStr];
+    }
+    renderApp();
+  }
+
+  function isDateBlocked(location, dateStr) {
+    return (blockedDatesStore[location] || []).includes(dateStr);
+  }
+
+  // Generate calendar grid for a given month (April 2026 for demo)
+  function renderCalendar(location) {
+    const year = 2026;
+    const month = 3; // April (0-index)
+    const firstDay = new Date(year, month, 1);
+    const startWeekday = firstDay.getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const calendarDays = [];
+    for (let i = 0; i < startWeekday; i++) calendarDays.push(null);
+    for (let d = 1; d <= daysInMonth; d++) calendarDays.push(new Date(year, month, d));
+    
+    const todayStr = new Date().toISOString().split('T')[0];
+    return `
+      <div class="grid grid-cols-7 gap-1 mb-2 text-center text-xs font-medium text-muted-foreground">
+        <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+      </div>
+      <div class="grid grid-cols-7 gap-1">
+        ${calendarDays.map(day => {
+          if (!day) return `<div class="h-10"></div>`;
+          const dateStr = day.toISOString().split('T')[0];
+          const isBlocked = isDateBlocked(location, dateStr);
+          const isPast = dateStr < todayStr;
+          return `
+            <div 
+              class="h-10 flex items-center justify-center text-sm rounded-full cursor-pointer transition ${isBlocked ? 'bg-red-100 text-red-700 line-through' : 'hover:bg-primary/10'} ${isPast ? 'text-gray-300 cursor-not-allowed' : ''}"
+              data-date="${dateStr}"
+            >
+              ${day.getDate()}
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  }
+
+  // Compute analytics
+  function getAnalytics() {
+    const totalOrders = ordersData.length;
+    const totalRevenue = ordersData.filter(o => o.price).reduce((sum, o) => sum + (o.price || 0), 0);
+    const productCounts = {};
+    ordersData.forEach(o => { productCounts[o.productType] = (productCounts[o.productType] || 0) + 1; });
+    const bestSeller = Object.entries(productCounts).sort((a,b) => b[1] - a[1])[0];
+    return { totalOrders, totalRevenue, productCounts, bestSeller };
+  }
+
+  // Render entire admin UI
+  function renderApp() {
+    const analytics = getAnalytics();
+    const root = document.getElementById('admin-root');
+    
+    // orders table rows
+    const ordersRows = ordersData.map(order => `
+      <tr class="border-b border-border hover:bg-secondary/30">
+        <td class="px-4 py-3 font-medium">${order.id}</td>
+        <td class="px-4 py-3"><div class="font-medium">${order.customerName}</div><div class="text-xs text-muted-foreground">${order.email}</div></td>
+        <td class="px-4 py-3">${order.productType}</td>
+        <td class="px-4 py-3"><span class="inline-flex rounded-full px-2 py-0.5 text-xs font-medium ${order.isCustom ? 'bg-primary/20 text-primary' : 'bg-gray-100'}">${order.isCustom ? 'Custom' : 'Regular'}</span></td>
+        <td class="px-4 py-3">${formatDate(order.createdAt)}</td>
+        <td class="px-4 py-3">${formatDate(order.pickupDate)}</td>
+        <td class="px-4 py-3">${getStatusBadge(order.status)}</td>
+        <td class="px-4 py-3">
+          ${order.isCustom ? `
+            ${order.status === 'pending_quote' ? `<button class="quote-trigger-btn bg-primary text-white text-xs px-3 py-1 rounded-full hover:bg-primary/80" data-order-id="${order.id}" data-order-json='${JSON.stringify(order)}'>Send Quote</button>` : `
+              <select class="status-select text-sm border border-border rounded-full px-2 py-1 bg-white" data-order-id="${order.id}">
+                <option value="quote_sent" ${order.status === 'quote_sent' ? 'selected' : ''}>Quote Sent</option>
+                <option value="deposit_received" ${order.status === 'deposit_received' ? 'selected' : ''}>Deposit Received</option>
+                <option value="design_approved" ${order.status === 'design_approved' ? 'selected' : ''}>Design Approved</option>
+                <option value="being_baked" ${order.status === 'being_baked' ? 'selected' : ''}>Being Baked</option>
+                <option value="done" ${order.status === 'done' ? 'selected' : ''}>Done</option>
+              </select>
+            `}
+          ` : `
+            <select class="status-select text-sm border border-border rounded-full px-2 py-1 bg-white" data-order-id="${order.id}">
+              <option value="pending_quote" ${order.status === 'pending_quote' ? 'selected' : ''}>Pending</option>
+              <option value="being_baked" ${order.status === 'being_baked' ? 'selected' : ''}>Being Baked</option>
+              <option value="done" ${order.status === 'done' ? 'selected' : ''}>Done</option>
+            </select>
+          `}
+        </td>
+      </tr>
+    `).join('');
+
+    // product breakdown rows
+    const productRows = Object.entries(analytics.productCounts).sort((a,b)=>b[1]-a[1]).map(([name, count]) => `
+      <tr class="border-b border-border"><td class="px-4 py-3">${name}</td><td class="px-4 py-3 text-right font-semibold">${count}</td></tr>
+    `).join('');
+
+    const blockedDatesHtml = (blockedDatesStore[selectedLocation] || []).map(dateStr => `
+      <div class="flex items-center justify-between bg-white rounded-lg px-4 py-2 border border-border mb-2">
+        <span class="text-sm">${new Date(dateStr).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}</span>
+        <button class="unblock-date-btn text-xs text-primary hover:underline" data-date="${dateStr}">Unblock</button>
+      </div>
+    `).join('') || '<p class="text-sm text-muted-foreground text-center py-3">No blocked dates</p>';
+
+    const modalHtml = showQuoteModal && selectedOrderForQuote ? `
+      <div id="quoteModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 modal-transition">
+        <div class="bg-white rounded-2xl max-w-md w-full mx-4 p-6 shadow-xl">
+          <h3 class="text-xl font-bold mb-3">Send Quote - ${selectedOrderForQuote.id}</h3>
+          <div class="space-y-3 text-sm mb-4">
+            <div><span class="text-muted-foreground">Customer:</span> ${selectedOrderForQuote.customerName}</div>
+            <div><span class="text-muted-foreground">Product:</span> ${selectedOrderForQuote.productType}</div>
+            <div><span class="text-muted-foreground">Size:</span> ${selectedOrderForQuote.size || '—'}</div>
+            <div><span class="text-muted-foreground">Flavors:</span> ${selectedOrderForQuote.flavors || '—'}</div>
+            <div><span class="text-muted-foreground">Design:</span> ${selectedOrderForQuote.designPreferences || '—'}</div>
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium mb-1">Quote Amount ($)</label>
+            <input type="number" id="modalQuoteAmount" class="w-full border border-border rounded-xl px-3 py-2" placeholder="Enter price" value="${quoteAmount}">
+          </div>
+          <div class="mb-5">
+            <label class="block text-sm font-medium mb-1">Notes (optional)</label>
+            <textarea id="modalQuoteNotes" rows="2" class="w-full border border-border rounded-xl px-3 py-2" placeholder="Add any notes">${quoteNotes}</textarea>
+          </div>
+          <div class="flex gap-3 justify-end">
+            <button id="closeModalBtn" class="px-4 py-2 rounded-full border border-border">Cancel</button>
+            <button id="confirmQuoteBtn" class="px-4 py-2 bg-primary text-white rounded-full">Send Quote</button>
+          </div>
+        </div>
+      </div>
+    ` : '';
+
+    const html = `
+      <div class="container mx-auto px-4 py-12 max-w-7xl">
+        <div class="mb-12 text-center">
+          <h1 class="text-4xl font-bold mb-3">Welcome back, Sabrina!</h1>
+          <p class="text-muted-foreground text-lg">Here's what's happening with your sweet creations today</p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex flex-wrap justify-center gap-2 mb-10 border-b border-border pb-2">
+          <button class="tab-btn px-6 py-2 rounded-full text-sm font-medium transition ${currentTab === 'orders' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-700'}" data-tab="orders">Orders</button>
+          <button class="tab-btn px-6 py-2 rounded-full text-sm font-medium transition ${currentTab === 'calendar' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-700'}" data-tab="calendar">Calendar</button>
+          <button class="tab-btn px-6 py-2 rounded-full text-sm font-medium transition ${currentTab === 'analytics' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-700'}" data-tab="analytics">Analytics</button>
+        </div>
+
+        ${currentTab === 'orders' ? `
+          <div class="bg-white border border-border rounded-2xl shadow-sm overflow-hidden">
+            <div class="p-6 border-b border-border"><h2 class="text-2xl font-bold">Your Orders</h2><p class="text-muted-foreground text-sm">Manage and track all incoming orders</p></div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead class="bg-secondary/50"><tr>${['Order ID','Customer','Product','Type','Order Date','Pickup Date','Status','Actions'].map(h=>`<th class="px-4 py-3 text-left">${h}</th>`).join('')}</tr></thead>
+                <tbody>${ordersRows}</tbody>
+              </table>
+            </div>
+          </div>
+        ` : ''}
+
+        ${currentTab === 'calendar' ? `
+          <div class="max-w-4xl mx-auto bg-white border border-border rounded-2xl shadow-sm p-6">
+            <div class="text-center mb-6"><h2 class="text-2xl font-bold">Calendar Availability</h2><p class="text-muted-foreground">Manage pickup dates for each location</p></div>
+            <div class="flex justify-center mb-6">
+              <div class="w-64">
+                <select id="locationSelect" class="w-full rounded-full border border-border px-4 py-2 bg-white">
+                  ${locations.map(loc => `<option value="${loc}" ${selectedLocation === loc ? 'selected' : ''}>${loc}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+            <div class="mb-8">${renderCalendar(selectedLocation)}</div>
+            <div class="max-w-md mx-auto bg-secondary/30 rounded-xl p-5">
+              <h4 class="font-medium text-center mb-3">🚫 Blocked Dates for ${selectedLocation}</h4>
+              <div id="blockedListContainer">${blockedDatesHtml}</div>
+            </div>
+          </div>
+        ` : ''}
+
+        ${currentTab === 'analytics' ? `
+          <div class="grid gap-6 md:grid-cols-3 mb-8">
+            <div class="bg-white rounded-2xl border border-border p-6 shadow-sm"><div class="flex justify-between"><p class="text-sm text-muted-foreground">Total Orders</p><i class="fas fa-box text-primary"></i></div><p class="text-3xl font-bold mt-2">${analytics.totalOrders}</p></div>
+            <div class="bg-white rounded-2xl border border-border p-6 shadow-sm"><div class="flex justify-between"><p class="text-sm text-muted-foreground">Total Revenue</p><i class="fas fa-dollar-sign text-primary"></i></div><p class="text-3xl font-bold mt-2">$${analytics.totalRevenue.toFixed(2)}</p></div>
+            <div class="bg-white rounded-2xl border border-border p-6 shadow-sm"><div class="flex justify-between"><p class="text-sm text-muted-foreground">Best Selling</p><i class="fas fa-chart-line text-primary"></i></div><p class="text-3xl font-bold mt-2">${analytics.bestSeller?.[1] || 0}</p><p class="text-xs text-muted-foreground">${analytics.bestSeller?.[0] || 'N/A'}</p></div>
+          </div>
+          <div class="bg-white rounded-2xl border border-border shadow-sm overflow-hidden">
+            <div class="p-6 border-b"><h3 class="text-xl font-bold">Product Breakdown</h3><p class="text-muted-foreground text-sm">Number of orders by product type</p></div>
+            <table class="w-full text-sm"><thead class="bg-secondary/50"><tr><th class="px-4 py-3 text-left">Product Type</th><th class="px-4 py-3 text-right">Order Count</th></tr></thead><tbody>${productRows}</tbody></table>
+          </div>
+        ` : ''}
+      </div>
+      ${modalHtml}
+    `;
+
+    root.innerHTML = html;
+
+    // Event bindings
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        currentTab = btn.getAttribute('data-tab');
+        renderApp();
+      });
+    });
+
+    if (currentTab === 'orders') {
+      document.querySelectorAll('.status-select').forEach(sel => {
+        sel.addEventListener('change', (e) => {
+          const orderId = sel.getAttribute('data-order-id');
+          const newStatus = sel.value;
+          updateOrderStatus(orderId, newStatus);
+        });
+      });
+      document.querySelectorAll('.quote-trigger-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const orderJson = btn.getAttribute('data-order-json');
+          selectedOrderForQuote = JSON.parse(orderJson);
+          quoteAmount = "";
+          quoteNotes = "";
+          showQuoteModal = true;
+          renderApp();
+        });
+      });
+    }
+
+    if (currentTab === 'calendar') {
+      const locationSelect = document.getElementById('locationSelect');
+      if (locationSelect) {
+        locationSelect.addEventListener('change', (e) => {
+          selectedLocation = e.target.value;
+          renderApp();
+        });
+      }
+      document.querySelectorAll('[data-date]').forEach(el => {
+        el.addEventListener('click', (e) => {
+          const dateStr = el.getAttribute('data-date');
+          const today = new Date().toISOString().split('T')[0];
+          if (dateStr >= today) toggleDateBlock(selectedLocation, dateStr);
+        });
+      });
+      document.querySelectorAll('.unblock-date-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const dateStr = btn.getAttribute('data-date');
+          toggleDateBlock(selectedLocation, dateStr);
+        });
+      });
+    }
+
+    if (showQuoteModal) {
+      const closeModal = () => { showQuoteModal = false; renderApp(); };
+      document.getElementById('closeModalBtn')?.addEventListener('click', closeModal);
+      document.getElementById('confirmQuoteBtn')?.addEventListener('click', () => {
+        const amountInput = document.getElementById('modalQuoteAmount');
+        const notesInput = document.getElementById('modalQuoteNotes');
+        quoteAmount = amountInput?.value || "";
+        quoteNotes = notesInput?.value || "";
+        if (selectedOrderForQuote) sendQuote(selectedOrderForQuote.id);
+        else closeModal();
+      });
+      document.getElementById('quoteModal')?.addEventListener('click', (e) => { if(e.target === document.getElementById('quoteModal')) closeModal(); });
+    }
+  }
+
+  renderApp();
+</script>
+</body>
+</html>
