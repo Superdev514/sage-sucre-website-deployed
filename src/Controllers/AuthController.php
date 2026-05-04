@@ -35,13 +35,13 @@ class AuthController
             $_SESSION['admin_id'] = $admin->id;
 
             return $response
-                ->withHeader('Location', '/Sage-Sucre-Website/admin')
+                ->withHeader('Location', '/admin')
                 ->withStatus(302);
         }
 
         // failed login → back to login page
         return $response
-            ->withHeader('Location', '/Sage-Sucre-Website/admin/login')
+            ->withHeader('Location', '/admin/login')
             ->withStatus(302);
     }
 
@@ -49,6 +49,6 @@ class AuthController
     {
         session_start();
         session_destroy();
-        return $response->withHeader('Location', '/Sage-Sucre-Website/admin/login')->withStatus(302);
+        return $response->withHeader('Location', '/admin/login')->withStatus(302);
     }
 }

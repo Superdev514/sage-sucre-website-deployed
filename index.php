@@ -28,7 +28,7 @@ Database::seed();
 
 // Create Slim app
 $app = AppFactory::create();
-$app->setBasePath('/Sage-Sucre-Website');
+$app->setBasePath('');
 $app->addErrorMiddleware(true, true, true);
 
 // Twig

@@ -58,7 +58,7 @@ class AdminController
         $order->status = $data['status'] ?? $order->status;
         R::store($order);
 
-        return $response->withHeader('Location', '/Sage-Sucre-Website/admin/orders')->withStatus(302);
+        return $response->withHeader('Location', '/admin/orders')->withStatus(302);
     }
 
     public function products(Request $request, Response $response): Response
@@ -97,7 +97,7 @@ class AdminController
         $product->image_url    = htmlspecialchars($data['image_url'] ?? '');
         R::store($product);
 
-        return $response->withHeader('Location', '/Sage-Sucre-Website/admin/products')->withStatus(302);
+        return $response->withHeader('Location', '/admin/products')->withStatus(302);
     }
 
     public function editProduct(Request $request, Response $response, array $args): Response
@@ -127,7 +127,7 @@ class AdminController
         $product->image_url    = htmlspecialchars($data['image_url'] ?? '');
         R::store($product);
 
-        return $response->withHeader('Location', '/Sage-Sucre-Website/admin/products')->withStatus(302);
+        return $response->withHeader('Location', '/admin/products')->withStatus(302);
     }
 
     public function deleteProduct(Request $request, Response $response, array $args): Response
@@ -135,7 +135,7 @@ class AdminController
         $product = R::load('product', (int) $args['id']);
         R::trash($product);
 
-        return $response->withHeader('Location', '/Sage-Sucre-Website/admin/products')->withStatus(302);
+        return $response->withHeader('Location', '/admin/products')->withStatus(302);
     }
 
     public function calendar(Request $request, Response $response): Response
@@ -160,7 +160,7 @@ class AdminController
         $blocked->date        = $data['date'] ?? '';
         R::store($blocked);
 
-        return $response->withHeader('Location', '/Sage-Sucre-Website/admin/calendar')->withStatus(302);
+        return $response->withHeader('Location', '/admin/calendar')->withStatus(302);
     }
 
     public function unblockDate(Request $request, Response $response): Response
@@ -169,7 +169,7 @@ class AdminController
         $blocked = R::load('blockeddate', (int) ($data['id'] ?? 0));
         R::trash($blocked);
 
-        return $response->withHeader('Location', '/Sage-Sucre-Website/admin/calendar')->withStatus(302);
+        return $response->withHeader('Location', '/admin/calendar')->withStatus(302);
     }
 
     public function analytics(Request $request, Response $response): Response

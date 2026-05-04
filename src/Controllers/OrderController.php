@@ -47,7 +47,7 @@ class OrderController
         R::freeze(true);
 
         return $response
-            ->withHeader('Location', '/Sage-Sucre-Website/order/confirm/' . $id)
+            ->withHeader('Location', '/order/confirm/' . $id)
             ->withStatus(302);
     }
 
