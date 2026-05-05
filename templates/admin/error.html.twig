@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oops! — Sage Sucre</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#e07a5f',
+            secondary: '#fdf3e7',
+            background: '#fffaf5',
+            foreground: '#2c2b28',
+            border: '#e9e2d8',
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>body { background: #fffaf5; }</style>
+</head>
+<body class="font-sans antialiased min-h-screen flex items-center justify-center">
+
+  <div class="text-center px-4">
+    <div class="text-8xl mb-6">🍰</div>
+    <h1 class="text-4xl font-bold mb-4">Oops, something went wrong!</h1>
+    <p class="text-muted-foreground text-lg mb-8 max-w-md mx-auto">
+      We're having a little trouble on our end. Please try again or go back to the homepage.
+    </p>
+    <div class="flex gap-4 justify-center">
+      <a href="/" class="bg-primary text-white px-6 py-3 rounded-full font-medium hover:bg-primary/90 transition shadow-md">
+        Back to Home
+      </a>
+      <a href="/contact" class="bg-white border border-border px-6 py-3 rounded-full font-medium hover:bg-secondary transition">
+        Contact Us
+      </a>
+    </div>
+  </div>
+
+</body>
+</html>

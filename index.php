@@ -29,7 +29,13 @@ Database::seed();
 // Create Slim app
 $app = AppFactory::create();
 $app->setBasePath('');
-$app->addErrorMiddleware(true, true, true);
+
+$errorMiddleware = $app->addErrorMiddleware(false, true, true);
+$errorMiddleware->setDefaultErrorHandler(function () use ($app) {
+    $response = $app->getResponseFactory()->createResponse();
+    $twig = Twig::create(__DIR__ . '/templates', ['cache' => false]);
+    return $twig->render($response->withStatus(500), 'error.html.twig');
+});
 
 // Twig
 $twig = Twig::create(__DIR__ . '/templates', ['cache' => false]);
