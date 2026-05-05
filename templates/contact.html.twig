@@ -1,29 +1,177 @@
 {% extends "layout.html.twig" %}
 
-{% block title %}Contact - Sage Sucre{% endblock %}
+{% block title %}
+Contact | Sage Sucre – Get in Touch for Custom Cakes & Treats
+{% endblock %}
 
 {% block content %}
-<section class="max-w-4xl mx-auto px-6 py-16">
-    <h1 class="text-4xl font-bold mb-6 text-[#2c2b28]">Contact Us</h1>
 
-    <div class="bg-[#fffaf5] border border-[#e9e2d8] rounded-2xl p-8 shadow-sm">
-        <p class="text-lg text-[#6b6a66] mb-6">
-            Have a question about an order, pickup location, or custom dessert?
-            Contact Sage Sucre using the information below.
+<section class="py-16 px-4 text-center bg-secondary border-b border-border/40">
+  <div class="container mx-auto max-w-3xl">
+    <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Get in Touch</h1>
+    <p class="text-muted-foreground text-lg max-w-2xl mx-auto">
+      Have questions? Want to discuss a custom order? I'd love to hear from you!
+    </p>
+  </div>
+</section>
+
+<section class="py-16 px-4">
+  <div class="container mx-auto max-w-4xl">
+
+    <div class="grid md:grid-cols-2 gap-8 mb-16">
+
+      <a href="https://instagram.com/sagesucre" target="_blank" rel="noopener noreferrer"
+         class="bg-white border border-border rounded-2xl p-8 contact-card group cursor-pointer">
+        <div class="flex items-start gap-4">
+          <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-all icon-hover">
+            <i class="fab fa-instagram text-primary text-2xl"></i>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold mb-2">Instagram (Preferred)</h3>
+            <p class="text-muted-foreground text-sm mb-3 leading-relaxed">
+              DM me on Instagram for the fastest response! You can also browse my latest creations.
+            </p>
+            <p class="text-primary font-medium">@sagesucre</p>
+          </div>
+        </div>
+      </a>
+
+      <a href="mailto:hello@sagesucre.com"
+         class="bg-white border border-border rounded-2xl p-8 contact-card group cursor-pointer">
+        <div class="flex items-start gap-4">
+          <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-all icon-hover">
+            <i class="fas fa-envelope text-primary text-2xl"></i>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold mb-2">Email</h3>
+            <p class="text-muted-foreground text-sm mb-3 leading-relaxed">
+              Prefer email? Send me a message and I'll get back to you within 24 hours.
+            </p>
+            <p class="text-primary font-medium">hello@sagesucre.com</p>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="bg-primary/5 border border-primary/20 rounded-2xl p-8 text-center mb-16">
+      <i class="fas fa-clock text-primary text-3xl mb-4"></i>
+      <h3 class="text-xl font-bold mb-3">Response Time</h3>
+      <p class="text-muted-foreground max-w-2xl mx-auto">
+        I typically respond within 24 hours Monday-Friday. Weekend messages will be answered on Monday.
+      </p>
+    </div>
+
+    <div class="bg-white border border-border rounded-2xl p-8 shadow-sm">
+      <h3 class="text-2xl font-bold mb-6 text-center">When Reaching Out, Please Include:</h3>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <h4 class="mb-3 flex items-center gap-2 font-semibold text-lg">
+            <i class="fas fa-comment-dots text-primary"></i>
+            Basic Info
+          </h4>
+          <ul class="text-sm text-muted-foreground space-y-2.5">
+            <li><i class="fas fa-check-circle text-primary text-xs mr-2"></i>Your name</li>
+            <li><i class="fas fa-check-circle text-primary text-xs mr-2"></i>Type of product you want</li>
+            <li><i class="fas fa-check-circle text-primary text-xs mr-2"></i>Number of servings or pieces</li>
+            <li><i class="fas fa-check-circle text-primary text-xs mr-2"></i>Preferred pickup date</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="mb-3 flex items-center gap-2 font-semibold text-lg">
+            <i class="fas fa-palette text-primary"></i>
+            Design Details
+          </h4>
+          <ul class="text-sm text-muted-foreground space-y-2.5">
+            <li><i class="fas fa-check-circle text-primary text-xs mr-2"></i>Flavor preferences</li>
+            <li><i class="fas fa-check-circle text-primary text-xs mr-2"></i>Color scheme or theme</li>
+            <li><i class="fas fa-check-circle text-primary text-xs mr-2"></i>Special requests or dietary needs</li>
+            <li><i class="fas fa-check-circle text-primary text-xs mr-2"></i>Inspiration photos</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-8 text-center border-t border-border pt-6">
+        <p class="text-sm text-muted-foreground mb-4">
+          Or better yet, use the order form to submit all your details at once!
         </p>
 
-        <div class="space-y-4 text-[#2c2b28]">
-            <p><strong>Email:</strong> sagesucre@example.com</p>
-            <p><strong>Instagram:</strong> @sagesucre</p>
-            <p><strong>Pickup Locations:</strong> Plateau, Montreal and Boisbriand</p>
-        </div>
-
-        <div class="mt-8">
-            <a href="/order"
-               class="inline-block bg-[#e07a5f] text-white px-6 py-3 rounded-xl font-semibold hover:opacity-90">
-                Start an Order
-            </a>
-        </div>
+        <a href="{{ base_path() }}/order"
+           class="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-full hover:bg-primary/90 transition-all shadow-sm text-base font-medium">
+          <i class="fas fa-cake-candles"></i>
+          Fill Out Order Form
+        </a>
+      </div>
     </div>
+
+  </div>
 </section>
+
+<section class="py-16 px-4 bg-secondary">
+  <div class="container mx-auto max-w-4xl">
+    <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center">Quick Answers</h2>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      {% set faqs = [
+        {
+          icon: "fa-calendar-alt",
+          question: "How much advance notice do you need?",
+          answer: "Minimum 48 hours for all orders. Custom cakes and large orders need 1-2 weeks notice."
+        },
+        {
+          icon: "fa-truck",
+          question: "Do you offer delivery?",
+          answer: "Pickup is preferred, but delivery may be available for an additional fee depending on location."
+        },
+        {
+          icon: "fa-paintbrush",
+          question: "Can you do custom designs?",
+          answer: "Absolutely! Send me your inspiration photos and ideas, and I'll create something special for you."
+        },
+        {
+          icon: "fa-credit-card",
+          question: "What payment methods do you accept?",
+          answer: "E-transfer is preferred. 50% deposit required to confirm, remaining balance due at pickup."
+        }
+      ] %}
+
+      {% for faq in faqs %}
+        <div class="bg-white p-6 rounded-xl border border-border quick-item transition-all">
+          <h3 class="font-bold mb-2 flex items-center gap-2">
+            <i class="fas {{ faq.icon }} text-primary text-sm"></i>
+            {{ faq.question }}
+          </h3>
+          <p class="text-sm text-muted-foreground">{{ faq.answer }}</p>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="text-center mt-8">
+      <a href="{{ base_path() }}/about"
+         class="text-primary hover:underline font-medium inline-flex items-center gap-1">
+        See more FAQs on the About page
+        <i class="fas fa-arrow-right text-xs"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="py-20 px-4">
+  <div class="container mx-auto max-w-3xl text-center">
+    <i class="fab fa-instagram text-primary text-4xl mb-5"></i>
+    <h2 class="text-3xl md:text-4xl font-bold mb-5">See My Work on Instagram</h2>
+    <p class="text-muted-foreground mb-8 text-lg max-w-xl mx-auto">
+      Check out photos of my recent creations, customer reviews, and behind-the-scenes baking content.
+    </p>
+
+    <a href="https://instagram.com/sagesucre" target="_blank" rel="noopener noreferrer"
+       class="inline-flex items-center gap-2 bg-primary text-white px-8 py-3 rounded-full hover:bg-primary/90 transition-all shadow-md text-base font-medium">
+      <i class="fab fa-instagram"></i>
+      Visit @sagesucre on Instagram
+    </a>
+  </div>
+</section>
+
 {% endblock %}

@@ -1,28 +1,135 @@
 {% extends "layout.html.twig" %}
 
-{% block title %}About - Sage Sucre{% endblock %}
+{% block title %}
+About Sage Sucre | Sabrina's Sweet Studio
+{% endblock %}
 
 {% block content %}
-<section class="max-w-5xl mx-auto px-6 py-16">
-    <h1 class="text-4xl font-bold mb-6 text-[#2c2b28]">About Sage Sucre</h1>
 
-    <div class="bg-[#fffaf5] border border-[#e9e2d8] rounded-2xl p-8 shadow-sm">
-        <p class="text-lg text-[#6b6a66] mb-4">
-            Sage Sucre is a small homemade sweets business run by Sabrina Moustaine.
-            The business focuses on custom desserts, cakes, cupcakes, and sweet treats
-            made for special events and personal orders.
-        </p>
-
-        <p class="text-lg text-[#6b6a66] mb-4">
-            Before this website, orders were mainly handled through Instagram messages.
-            This website helps make the ordering process easier by letting customers
-            browse products, submit orders, and choose pickup details in one place.
-        </p>
-
-        <p class="text-lg text-[#6b6a66]">
-            Our goal is to give Sage Sucre a simple and organized online system that
-            supports both customers and the business owner.
-        </p>
-    </div>
+<section class="py-16 px-4 text-center bg-secondary border-b border-border/40">
+  <div class="container mx-auto max-w-3xl">
+    <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">About Sage Sucre</h1>
+    <p class="text-muted-foreground text-lg max-w-2xl mx-auto">
+      Meet Sabrina and learn about the sweet journey behind Sage Sucre
+    </p>
+  </div>
 </section>
+
+<section class="py-16 px-4">
+  <div class="container mx-auto max-w-5xl">
+
+    <div class="grid md:grid-cols-2 gap-12 items-center mb-20">
+      <div>
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">Hi, I'm Sabrina!</h2>
+        <p class="text-muted-foreground mb-4">
+          Welcome to Sage Sucre! What started as a hobby has grown into a passion
+          for creating custom cakes and treats.
+        </p>
+        <p class="text-muted-foreground mb-4">
+          Every dessert is made with love and designed to create memories for your special moments.
+        </p>
+        <p class="text-muted-foreground">
+          "Sage Sucre" combines wisdom and sweetness — simple, creative, and meaningful baking.
+        </p>
+      </div>
+
+      <div class="aspect-[3/4] rounded-xl overflow-hidden shadow-lg">
+        <img src="https://images.unsplash.com/photo-1627308593341-d886acdc06a2"
+             class="w-full h-full object-cover">
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="aspect-[3/4] rounded-xl overflow-hidden shadow-lg md:order-2">
+        <img src="https://images.unsplash.com/photo-1760661642486-bf574784273b"
+             class="w-full h-full object-cover">
+      </div>
+
+      <div class="md:order-1">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">Made Fresh, Just for You</h2>
+        <p class="text-muted-foreground mb-4">
+          Every order is made from scratch — nothing is pre-made or stored.
+        </p>
+        <p class="text-muted-foreground mb-4">
+          I work closely with you to bring your ideas to life.
+        </p>
+        <p class="text-muted-foreground">
+          Thank you for supporting my small business!
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="py-20 px-4 bg-secondary">
+  <div class="container mx-auto max-w-5xl">
+    <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">What Makes Sage Sucre Special</h2>
+
+    <div class="grid md:grid-cols-3 gap-8">
+
+      {% set features = [
+        { icon: "fa-heart", title: "Made with Love", text: "Every treat is handcrafted with care." },
+        { icon: "fa-users", title: "Personalized Service", text: "Work directly with me to customize everything." },
+        { icon: "fa-clock", title: "Always Fresh", text: "Baked fresh for your pickup date." }
+      ] %}
+
+      {% for f in features %}
+        <div class="bg-white p-8 rounded-2xl text-center shadow-sm">
+          <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-5">
+            <i class="fas {{ f.icon }} text-primary text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">{{ f.title }}</h3>
+          <p class="text-sm text-muted-foreground">{{ f.text }}</p>
+        </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+
+<section class="py-20 px-4">
+  <div class="container mx-auto max-w-4xl">
+    <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">Frequently Asked Questions</h2>
+
+    {% set faqs = [
+      { q: "How far in advance should I order?", a: "At least 48 hours. Custom cakes need 1–2 weeks." },
+      { q: "Do you offer delivery?", a: "Pickup preferred. Delivery may be arranged for a fee." },
+      { q: "Dietary restrictions?", a: "Yes — gluten-free, dairy-free, vegan options available." },
+      { q: "Cancel or change order?", a: "Contact ASAP. Deposits non-refundable within 48h." },
+      { q: "How do I pay?", a: "E-transfer. 50% deposit required." }
+    ] %}
+
+    <div class="space-y-5">
+      {% for faq in faqs %}
+        <div class="bg-white border border-border rounded-xl p-6 shadow-sm">
+          <h3 class="font-bold mb-2">{{ faq.q }}</h3>
+          <p class="text-sm text-muted-foreground">{{ faq.a }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="py-20 px-4 bg-primary/5 border-t border-primary/10 text-center">
+  <div class="container mx-auto max-w-3xl">
+    <h2 class="text-3xl md:text-4xl font-bold mb-5">Let's Create Something Sweet!</h2>
+    <p class="text-muted-foreground mb-8">
+      Place your order today and let’s make your celebration special.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-5 justify-center">
+      <a href="{{ base_path() }}/order"
+         class="bg-primary text-white px-8 py-3 rounded-full">
+        Place an Order
+      </a>
+
+      <a href="https://instagram.com/sagesucre" target="_blank"
+         class="bg-white border border-border px-8 py-3 rounded-full">
+        Follow on Instagram
+      </a>
+    </div>
+  </div>
+</section>
+
 {% endblock %}
