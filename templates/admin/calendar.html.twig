@@ -1,0 +1,80 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+
+<section class="py-16 px-4 bg-secondary min-h-screen">
+  <div class="container mx-auto max-w-4xl">
+
+    <h1 class="text-4xl font-bold mb-8">Calendar Management</h1>
+
+    <!-- Block a date -->
+    <div class="bg-white rounded-xl shadow p-6 mb-8">
+      <h2 class="text-xl font-bold mb-4">Block a Date</h2>
+      <form method="POST" action="/admin/calendar/block" class="flex flex-wrap gap-4 items-end">
+
+        <div>
+          <label class="block text-sm font-medium mb-1">Pickup Location</label>
+          <select name="location_id" required
+                  class="border border-border rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+            <option value="">Select location...</option>
+            {% for location in locations %}
+              <option value="{{ location.id }}">{{ location.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium mb-1">Date</label>
+          <input type="date" name="date" required
+                 min="{{ "now"|date("Y-m-d") }}"
+                 class="border border-border rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+        </div>
+
+        <button type="submit"
+                class="bg-primary text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-primary/90 transition shadow-sm">
+          Block Date
+        </button>
+
+      </form>
+    </div>
+
+    <!-- Blocked dates list -->
+    <div class="bg-white rounded-xl shadow p-6">
+      <h2 class="text-xl font-bold mb-4">Blocked Dates</h2>
+
+      {% if blocked is empty %}
+        <p class="text-muted-foreground text-sm">No dates are currently blocked.</p>
+      {% else %}
+        <div class="space-y-3">
+          {% for date in blocked %}
+            <div class="flex items-center justify-between border border-border rounded-lg px-4 py-3">
+              <div>
+                <p class="font-medium text-sm">{{ date.date }}</p>
+                <p class="text-xs text-muted-foreground">
+                  {% for location in locations %}
+                    {% if location.id == date.location_id %}{{ location.name }}{% endif %}
+                  {% endfor %}
+                </p>
+              </div>
+              <form method="POST" action="/admin/calendar/unblock">
+                <input type="hidden" name="id" value="{{ date.id }}">
+                <button type="submit"
+                        class="text-red-500 hover:underline text-sm font-medium"
+                        onclick="return confirm('Unblock this date?')">
+                  Unblock
+                </button>
+              </form>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="mt-6">
+      <a href="/admin" class="text-primary hover:underline">← Back to Dashboard</a>
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}

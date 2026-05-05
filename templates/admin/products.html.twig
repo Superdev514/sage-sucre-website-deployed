@@ -1,0 +1,86 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+
+<section class="py-16 px-4 bg-secondary min-h-screen">
+  <div class="container mx-auto max-w-6xl">
+
+    <div class="flex items-center justify-between mb-8">
+      <h1 class="text-4xl font-bold">Products</h1>
+      <a href="/admin/products/create"
+         class="bg-primary text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-primary/90 transition shadow-sm">
+        + Add Product
+      </a>
+    </div>
+
+    {% if products is empty %}
+      <div class="bg-white p-8 rounded-xl shadow text-center">
+        <p class="text-muted-foreground mb-4">No products yet.</p>
+        <a href="/admin/products/create" class="bg-primary text-white px-5 py-2 rounded-full text-sm">
+          Add your first product
+        </a>
+      </div>
+    {% else %}
+      <div class="bg-white rounded-xl shadow overflow-hidden">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-primary text-white">
+            <tr>
+              <th class="p-4">ID</th>
+              <th class="p-4">Name</th>
+              <th class="p-4">Category</th>
+              <th class="p-4">Price</th>
+              <th class="p-4">Available</th>
+              <th class="p-4">Presale</th>
+              <th class="p-4">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for product in products %}
+              <tr class="border-b hover:bg-secondary/50 transition">
+                <td class="p-4">#{{ product.id }}</td>
+                <td class="p-4 font-medium">{{ product.name }}</td>
+                <td class="p-4">{{ product.category_id }}</td>
+                <td class="p-4">
+                  {% if product.base_price > 0 %}
+                    ${{ product.base_price|number_format(2) }}
+                  {% else %}
+                    Quote
+                  {% endif %}
+                </td>
+                <td class="p-4">
+                  {% if product.is_available %}
+                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Yes</span>
+                  {% else %}
+                    <span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs">No</span>
+                  {% endif %}
+                </td>
+                <td class="p-4">
+                  {% if product.is_presale %}
+                    <span class="bg-primary/10 text-primary px-2 py-1 rounded-full text-xs">Presale</span>
+                  {% else %}
+                    <span class="text-gray-400 text-xs">—</span>
+                  {% endif %}
+                </td>
+                <td class="p-4 flex gap-3">
+                  <a href="/admin/products/{{ product.id }}/edit"
+                     class="text-primary hover:underline font-medium">Edit</a>
+                  <form method="POST" action="/admin/products/{{ product.id }}/delete"
+                        onsubmit="return confirm('Delete this product?')">
+                    <button type="submit" class="text-red-500 hover:underline font-medium">Delete</button>
+                  </form>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% endif %}
+
+    <div class="mt-6">
+      <a href="/admin" class="text-primary hover:underline">← Back to Dashboard</a>
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}
