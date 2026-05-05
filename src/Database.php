@@ -107,6 +107,15 @@ class Database
             }
         }
 
+        // Create blockeddate table if empty
+        if (R::count('blockeddate') === 0) {
+            $dummy = R::dispense('blockeddate');
+            $dummy->location_id = 0;
+            $dummy->date = '2000-01-01';
+            $id = R::store($dummy);
+            R::trash(R::load('blockeddate', $id));
+        }
+
         
 
 
