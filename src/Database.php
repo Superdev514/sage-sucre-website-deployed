@@ -11,12 +11,12 @@ class Database
     public static function connect(): void
     {
         R::setup(
-        'mysql:host=' . $_ENV['DB_HOST'] .
-        ';port=' . ($_ENV['DB_PORT'] ?? '3306') .
-        ';dbname=' . $_ENV['DB_NAME'],
-        $_ENV['DB_USER'],
-        $_ENV['DB_PASS']
-    );
+            'mysql:host=' . $_ENV['DB_HOST'] .
+            ';port=' . ($_ENV['DB_PORT'] ?? '3306') .
+            ';dbname=' . $_ENV['DB_NAME'],
+            $_ENV['DB_USER'],
+            $_ENV['DB_PASS']
+        );
         R::freeze(true);
     }
 
@@ -115,10 +115,6 @@ class Database
             }
         }
 
-        // Products
-        if (R::count('product') === 0) {
-            // paste product code here
-        }
 
         R::freeze(true);
     }
