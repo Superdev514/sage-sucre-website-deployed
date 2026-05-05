@@ -10,13 +10,18 @@ class Database
 {
     public static function connect(): void
     {
+        $host = getenv('DB_HOST');
+        $port = getenv('DB_PORT') ?: '3306';
+        $name = getenv('DB_NAME');
+        $user = getenv('DB_USER');
+        $pass = getenv('DB_PASS');
+
         R::setup(
-            'mysql:host=' . $_ENV['DB_HOST'] .
-            ';port=' . ($_ENV['DB_PORT'] ?? '3306') .
-            ';dbname=' . $_ENV['DB_NAME'],
-            $_ENV['DB_USER'],
-            $_ENV['DB_PASS']
+            "mysql:host={$host};port={$port};dbname={$name}",
+            $user,
+            $pass
         );
+
         R::freeze(true);
     }
 
@@ -103,17 +108,6 @@ class Database
         }
 
         
-        // Pickup locations
-        if (R::count('pickuplocation') === 0) {
-            foreach ([
-                'Plateau (Montreal)',
-                'Boisbriand',
-            ] as $loc) {
-                $l = R::dispense('pickuplocation');
-                $l->name = $loc;
-                R::store($l);
-            }
-        }
 
 
         R::freeze(true);
