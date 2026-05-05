@@ -21,9 +21,6 @@ class AuthController
 
     public function login(Request $request, Response $response): Response
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
 
         $data = $request->getParsedBody();
 
@@ -47,7 +44,6 @@ class AuthController
 
     public function logout(Request $request, Response $response): Response
     {
-        session_start();
         session_destroy();
         return $response->withHeader('Location', '/admin/login')->withStatus(302);
     }
